@@ -1,166 +1,116 @@
-# qcf_quran
+# روايات القرآن — Riwayat Quran
 
-[English](https://github.com/m4hmoud-atef/qcf_quran/blob/main/README.md) | العربية
-<p align="center">
-  <img src="https://raw.githubusercontent.com/m4hmoud-atef/qcf_quran/main/assets/Screenshot_1756290211.png" alt="عرض صفحة المصحف" width="48%">
-  <img src="https://raw.githubusercontent.com/m4hmoud-atef/qcf_quran/main/assets/Screenshot_1756290218.png" alt="البحث وعرض الآية" width="48%">
-</p>
+باكج Flutter لعرض المصحف والنص الأصلي والتفاعل مع الآيات وتوفير روابط
+التلاوات. اسم الهوية هو **روايات القرآن**، واسم الاستيراد الحالي **`qcf_quran`**
+محفوظ للتوافق مع التطبيقات التي تستخدمه.
 
-عرض مصحف عالي الدقة في Flutter باستخدام مجموعة خطوط QCF (Quranic Computer Font). تتضمن الحزمة خطوطًا لكل صفحة (604 صفحة) مع أدوات تساعدك على:
+يدعم الباكج حاليًا **حفص وورش**. الاسم مناسب للتوسع إلى روايات أخرى؛ لا يعني
+أنها مدعومة بالفعل. هذه النسخة المحلية في فاستقم تحمل الرقم `0.0.5` مع
+إضافات موضحة تحت `Unreleased` في [سجل التغييرات](CHANGELOG.md).
 
-- عرض المصحف كاملًا مع التمرير بين الصفحات من اليمين إلى اليسار.
-- عرض آية واحدة بخط الصفحة الصحيح مع رمز نهاية الآية.
-- الاستعلام عن البيانات مثل أرقام الصفحات وأسماء السور/الأجزاء وعدد الآيات والبحث في النص العربي.
+[English](README.md) · [فهرس التوثيق](docs/README.md) ·
+[مرجع الواجهات](docs/API.md) · [المثال](example/README.md)
 
-ملاحظة: تحتوي الحزمة على 604 ملف خط منفصل (لكل صفحة)، لذلك فإن حجم الحزمة كبير نسبيًا بسبب تضمين هذه الخطوط.
+## المزايا الحالية
 
-أضيف دعم **ورش داخل الباكج نفسه**، وتبقى حفص هي الرواية الافتراضية:
+| العنصر | حفص | ورش |
+| --- | --- | --- |
+| السور والصفحات | 114 سورة و604 صفحات | 114 سورة و604 صفحات |
+| الآيات | 6236، بالعد الكوفي | 6214، بالعد المدني الأخير |
+| النص الأصلي والخط المقترن به | محليان | محليان |
+| عرض الصفحة الثابت | خطوط QCF المحلية | رسوم SVG وهندسة نقر مطابقة |
+| توفر الرسم دون إنترنت | كل الصفحات | أول ثلاث صفحات افتراضيًا |
+| النقر والضغط المطول والتحديد | متاحة | بعد جاهزية الرسم |
 
-```dart
-PageviewQuran(
-  riwayah: QuranRiwayah.warsh,
-  onAyahTap: (reference) {
-    // المرجع يحمل الرواية والسورة والآية لفتح خيارات التطبيق.
-  },
-);
-```
+اختلاف عدد الآيات لا يعني نقص النص. الباكج لا يتضمن مشغل صوت أو تفاسير
+أو قاعدة بيانات للمحفوظات أو إشعارات؛ هذه مسؤولية التطبيق المستهلك.
 
-نص ورش وخطه ومواضع النقر للصفحات الـ604 مضمنة محليًا. عرض الصفحات يحفظ
-رسم الكلمات وتوزيع السطور؛ الرسوم الثلاثة الأولى مضمنة، والبقية تُقرأ من
-مصدر مثبت عبر الإنترنت. مصدر الرسم يزيل إطار الطبعة والترويسة وأرقام
-الصفحات ويعيد رسم زخرفة علامات الآيات. توجد أيضًا واجهات MP3Quran وEveryAyah
-لروابط التلاوات دون تنزيل الصوت، مع معالجة صريحة لاختلاف ترقيم ورش.
-التفاصيل في [دليل الدمج](docs/WARSH_INTEGRATION.md)،
-[المثال](example/lib/riwayah_mushaf_example.dart)
-و[إشعارات المصادر](THIRD_PARTY_NOTICES.md).
+## الإضافة إلى التطبيق
 
-## المزايا
-
-- مصحف مطابق للصفحات الأصلية باستخدام خطوط QCF الداخلية (604 صفحة)
-- `PageviewQuran`: صفحات أفقية قابلة للتمرير RTL وتطبيق الخط المناسب لكل صفحة تلقائيًا
-- `QcfVerse`: عرض آية واحدة بالخط الصحيح ورقم الآية
-- أدوات وبيانات:
-  - البحث `searchWords(…)`
-  - الأسماء: أسماء السور بالعربية والإنجليزية
-  - التهيئة النصية: `normalise(…)` و `removeDiacritics(…)`
-
-## البدء السريع
-
-1) أضف الاعتماد إلى `pubspec.yaml` في تطبيقك:
+المتطلبات: **Dart 3.7 فأحدث ضمن 3.x** و**Flutter 3.29 فأحدث**. إذا كان
+مجلد التطبيق بجانب `custom_packages`:
 
 ```yaml
 dependencies:
-  qcf_quran: ^0.0.2
+  qcf_quran:
+    path: ../custom_packages/qcf_quran
 ```
 
-2) الحزمة تتضمن الخطوط المطلوبة مسبقًا. لا حاجة لإضافة أصول إضافية في تطبيقك.
+نفّذ `flutter pub get`. غيّر المسار إن اختلف ترتيب مجلداتك. الخطوط والأصول
+مضافة داخل الباكج ولا تحتاج إلى نسخها أو تسجيلها مرة أخرى في التطبيق.
+الإصدار المنشور على pub.dev بنفس الرقم لا يضمن وجود إضافات هذه النسخة المحلية.
 
-## الاستخدام
-
-### عرض آية واحدة
+## عرض المصحف
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:qcf_quran/qcf_quran.dart';
 
-class SingleVerseDemo extends StatelessWidget {
-  const SingleVerseDemo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Directionality(
-      textDirection: TextDirection.rtl,
-      child: QcfVerse(
-        surahNumber: 1, // الفاتحة
-        verseNumber: 1,
-      ),
-    );
-  }
-}
-```
-
-### المصحف مع التمرير بين الصفحات
-
-```dart
-MaterialApp(
-  home: Scaffold(
-    body: PageviewQuran(
-      initialPageNumber: 1,
-      onPageChanged: (page) {
-        // التعامل مع تغيّر الصفحة (1..604)
-      },
-    ),
-  ),
+PageviewQuran(
+  riwayah: QuranRiwayah.warsh,
+  initialPageNumber: 1,
+  theme: QcfThemeData.dark(),
+  onAyahTap: (reference) {
+    // احفظ reference.key؛ فهو يتضمن الرواية والسورة والآية.
+  },
 );
 ```
 
-#### المصحف مع التمرير (Responsive باستخدام ScreenUtil)
+حفص هي الافتراضية. استخدم `QcfPage` لصفحة واحدة، و`QcfVerse` لآية، و`QcfVerses`
+لمجموعة آيات من سورة واحدة. الصفحة الثابتة تحفظ توزيع الكلمات؛ عرض الآيات
+يسمح بتدفق النص في المساحة المتاحة.
+
+## النص والبحث
 
 ```dart
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qcf_quran/qcf_quran.dart';
-
-// داخل build (تأكد من تهيئة ScreenUtil)
-PageviewQuran(
-  initialPageNumber: 1,
-
-  ///sp for responsiveness
-  sp: 1.sp,
-
-  ///h for responsiveness
-  h: 1.h,
-  textColor: Colors.black,
-  onLongPress: (surah, verse) {
-    print("Long Pressed on verse $surah:$verse");
-  },
-  onLongPressUp: (surah, verse) {
-    print("Long Press Up on verse $surah:$verse");
-  },
-  onLongPressCancel: (surah, verse) {
-    print("Long Press Cancel on verse $surah:$verse");
-  },
-  onLongPressDown: (surah, verse, details) {
-    print(
-        "Long Press Down on verse $surah:$verse @ ${details.globalPosition}");
-  },
-),
+final hafs = getVerse(2, 255);
+final results = searchWords('الرحمن'); // حفص؛ حتى 50 نتيجة.
+final warsh = await WarshMushaf.load();
+final verse = warsh.getVerse(2, 285);
 ```
 
-## لقطات شاشة
+الدوال القديمة العامة مثل `getVerse` و`getPageNumber` تستخدم حفص دائمًا.
+لبيانات ورش استخدم `WarshMushaf`. احفظ الرواية في المراجع، ولا تربط التفسير
+أو الصوت بين الروايتين بمجرد تطابق الرقم. [دليل الروايات](docs/WARSH_INTEGRATION.md).
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/m4hmoud-atef/qcf_quran/main/assets/Screenshot_1756290211.png" alt="عرض صفحة المصحف" width="48%">
-  <img src="https://raw.githubusercontent.com/m4hmoud-atef/qcf_quran/main/assets/Screenshot_1756290218.png" alt="البحث وعرض الآية" width="48%">
-</p>
+## التلاوات
 
-## ملاحظات
+`Mp3QuranApi` يجلب فهرس القراء والروايات والسور ويكوّن روابط تسجيل السور.
+اعرض فقط `availableSurahs` للمجموعة المختارة، وأغلق المزود بواسطة `close()`
+عند انتهاء استخدامه. `EveryAyahProvider` يكوّن روابط مقاطع الآيات ويطلب
+تحويلًا موثقًا عند اختلاف الترقيم. الباكج لا ينزّل الصوت ولا يشغّله.
+[دليل الصوتيات](docs/AUDIO.md).
 
-- الخطوط مخصصة لكل صفحة. استخدم دائمًا عائلة خط الصفحة (يتم ذلك داخليًا في `QcfVerse` و`PageviewQuran`).
-- اتجاه العرض من اليمين إلى اليسار.
-- لأفضل استجابة وتنسيق، استخدم `flutter_screenutil`، ومرّر `sp` و`h` إلى `PageviewQuran` (مثلًا: `sp: 1.sp`, `h: 1.h`) بعد تهيئة ScreenUtil في تطبيقك.
+## الإنترنت والأداء
 
-## خطوط QCF
+نص ورش وخطه وهندسة النقر لكل صفحاته محلية. رسوم الصفحات 4–604 تُجلب افتراضيًا
+من مصدر مثبت عبر الإنترنت. لعرضها دون إنترنت وفّر رسمًا محليًا مطابقًا عبر
+`warshPagePictureBuilder`، ولتخصيص التحميل استخدم `warshLoadingBuilder`.
 
-- تحتوي الحزمة على 604 ملف خط من نوع WOFF، لكل صفحة عائلة خط باسم `QCF_P001` … `QCF_P604`.
-- الرموز المتعلقة بالآيات (مثل البسملة وعلامات نهاية الآية) متوفرة عبر عائلة `QCF_BSML`.
-- يقوم الودجتان `QcfVerse` و`PageviewQuran` باختيار وتطبيق عائلة الخط المطابقة للصفحة تلقائيًا؛ لا حاجة لاختيارها يدويًا.
-- تجنّب خلط خطوط صفحات مختلفة. استخدام عائلة الصفحة يضمن مطابقة التراكيب ومواضع الحروف للمصحف المعتمد.
+حجم الأصول يقارب **64 MiB** قبل الضغط، ولا يمثل حجم التطبيق النهائي. لا تعِد
+إنشاء مستقبل التحميل داخل `build`؛ أدر المتحكمات والعملاء الخارجيين واختبر
+الأداء على الجهاز المستهدف. [الأداء وحل المشكلات](docs/PERFORMANCE_AND_TROUBLESHOOTING.md).
 
-## مرجع فيديو
+## التشغيل والتحقق
 
-فيديو توضيحي: https://www.youtube.com/watch?v=s_6cvcFVP54
+```sh
+flutter pub get
+flutter analyze --no-preamble --no-fatal-infos
+flutter test
+```
 
-## 📜 الترخيص والشكر
+شغّل العرض التجريبي من `example/` بواسطة `flutter run`. راجع
+[المساهمة](CONTRIBUTING.md)، [نتائج التحقق](docs/VALIDATION.md)،
+و[إدارة Git والصيانة](docs/MAINTENANCE.md).
 
-> **تنبيه**: هذه الحزمة والخطوط المدمجة معها **ليست للاستخدام التجاري**.
+## الحقوق والمصادر
 
-- **الكود**: ترخيص MIT.
-- **الخطوط**: **مجمع الملك فهد لطباعة المصحف الشريف (KFGQPC)**. يُرجى الالتزام بشروطهم عند توزيع التطبيقات.
-- **البيانات**: مصادر البيانات في `lib/src/data/`.
+أصل الباكج هو [qcf_quran للمطور محمود عاطف](https://github.com/m4hmoud-atef/qcf_quran).
+[ترخيص الكود](LICENSE) وإشعارات [النصوص والخطوط والرسوم](THIRD_PARTY_NOTICES.md)
+محفوظة. تغيير هوية العرض لا يزيل حقوق المؤلفين والمصادر. كان README الأصلي
+يتضمن التنبيه التالي، وهو محفوظ هنا:
 
----
+> هذه الحزمة وخطوطها المضمنة ليست للاستخدام التجاري.
 
-## 📞 للتواصل
-
-- **مطور الحزمة (محمود عاطف)**: [GitHub (@m4hmoud-atef)](https://github.com/m4hmoud-atef)
-- **مطور الخطوط**: ديسكورد `ayman24x7`
+لم تُغيَّر نصوص التراخيص الأصلية. الفحوص التقنية ليست مراجعة قرآنية مستقلة
+لكل حرف أو صفحة أو حدود تسجيل مسموع.

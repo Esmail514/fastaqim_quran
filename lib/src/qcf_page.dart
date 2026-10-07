@@ -59,11 +59,11 @@ class QcfPage extends StatefulWidget {
   final void Function(int surahNumber, int verseNumber)? onTap;
 
   /// Optional callback to customize verse background color dynamically.
-  /// This takes precedence over [theme.verseBackgroundColor] if provided.
+  /// This takes precedence over [QcfThemeData.verseBackgroundColor] if provided.
   final Color? Function(int surahNumber, int verseNumber)? verseBackgroundColor;
 
   /// The current page the user is viewing (1-based). Used for windowed caching.
-  /// Pages outside [currentPage ± windowSize] are released from memory.
+  /// Pages outside `currentPage ± windowSize` are released from memory.
   final int currentPage;
 
   /// Number of pages to keep alive on each side of the current page.

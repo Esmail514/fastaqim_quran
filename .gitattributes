@@ -1,8 +1,8 @@
-# Publisher assets must retain their exact bytes for manifest verification.
-assets/** -text
-
 # Documentation and tooling use consistent line endings.
 *.md text eol=lf
 *.py text eol=lf
 .gitignore text eol=lf
 .gitattributes text eol=lf
+
+# Preserve publisher assets and their notices byte-for-byte.
+assets/** -text

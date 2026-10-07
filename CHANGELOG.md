@@ -1,5 +1,11 @@
 ## Unreleased
 
+- Document the local edition as Riwayat Quran (روايات القرآن), retaining the
+  `qcf_quran` import namespace and current Hafs/Warsh support.
+- Add bilingual getting-started guides, public API/audio/assets/performance
+  documentation, contributor and maintenance guides, and expansion criteria.
+- Prepare independent local Git tracking while preserving publisher asset bytes.
+
 - Add Warsh to the existing rendering widgets with narration-aware ayah taps,
   original Warsh text/font, and matching fixed SVG page layouts and hit regions.
 - Keep Hafs as the default and preserve its data helpers and source assets.

@@ -11,7 +11,7 @@ import 'warsh/warsh_page.dart';
 /// - Uses `pageData` to determine surah/verse ranges for each page.
 /// - Renders each verse with `QcfVerse`, which applies the correct per-page font.
 /// - Supports RTL page order via `reverse: true` and `Directionality.rtl`.
-/// - Memory-efficient: only the [±windowSize] pages around the current page
+/// - Memory-efficient: only the `±windowSize` pages around the current page
 ///   are kept alive in the widget tree; all others are freed automatically.
 class PageviewQuran extends StatefulWidget {
   /// 1-based initial page number (1..604)

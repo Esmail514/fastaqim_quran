@@ -1,370 +1,141 @@
-# qcf_quran 📖
+# Riwayat Quran — روايات القرآن
 
-[![Pub Version](https://img.shields.io/pub/v/qcf_quran)](https://pub.dev/packages/qcf_quran)
-[![License](https://img.shields.io/github/license/m4hmoud-atef/qcf_quran)](https://github.com/m4hmoud-atef/qcf_quran/blob/main/LICENSE)
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow.svg)](https://buymeacoffee.com/m4hmoudd)
+A Flutter Quran package for fixed mushaf pages, readable publisher text,
+narration-aware ayah interaction, and audio URL providers. **Riwayat Quran**
+is its display identity; the current technical package/import name remains
+**`qcf_quran`** for compatibility with existing applications.
 
-[English] | [العربية](https://github.com/m4hmoud-atef/qcf_quran/blob/main/README.ar.md)
+This local Fastaqim edition currently supports **Hafs and Warsh**. The name
+allows future narration support; it does not claim that other narrations are
+already implemented. Version: `0.0.5`, with local additions listed under
+`Unreleased` in [CHANGELOG.md](CHANGELOG.md).
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/m4hmoud-atef/qcf_quran/main/assets/Screenshot_1756290211.png" alt="Quran page view" width="48%">
-  <img src="https://raw.githubusercontent.com/m4hmoud-atef/qcf_quran/main/assets/Screenshot_1756290218.png" alt="Search and verse" width="48%">
-</p>
+[العربية](README.ar.md) · [Documentation](docs/README.md) ·
+[API reference](docs/API.md) · [Demo](example/README.md)
 
-**High-fidelity Quran Mushaf rendering in Flutter.**
+## Included capabilities
 
-The same package now supports **Hafs and Warsh**. Hafs remains the default;
-select Warsh without replacing the existing widgets:
+| Feature | Hafs | Warsh |
+| --- | --- | --- |
+| Surahs / printed pages | 114 / 604 | 114 / 604 |
+| Native ayahs | 6236, Kufan count | 6214, Madani-last count |
+| Original readable text and Unicode font | Local | Local |
+| Fixed page renderer | Local QCF page fonts | SVG pictures and matching hit geometry |
+| Default pictures without internet | All pages | Pages 1–3; remaining pictures are online |
+| Tap, long press, highlighting | Supported | Supported when picture is ready |
+| Audio integration | Catalogs and URLs | Catalogs and URLs with numbering guards |
 
-```dart
-PageviewQuran(
-  riwayah: QuranRiwayah.warsh,
-  onAyahTap: (reference) {
-    // reference includes the riwayah, surah and ayah for app actions.
-  },
-);
+No audio files, player, tafsir database, bookmarks database or notification
+service are included. Flowing verse text and fixed printed page layout are
+different display modes. See [assets/data](docs/DATA_AND_ASSETS.md).
+
+## Install the local edition
+
+Requires **Dart >=3.7.0 <4.0.0** and **Flutter >=3.29.0**. For a Flutter app
+located next to the `custom_packages` directory:
+
+```yaml
+dependencies:
+  qcf_quran:
+    path: ../custom_packages/qcf_quran
 ```
 
-Warsh uses its original 6214-ayah text and font, with fixed SVG page layouts and
-matching tap regions. The first three page drawings are bundled; other drawings
-load from a pinned online source. The source omits the printed frame, running
-header and page numbers and redraws ayah marker ornaments. See the
-[integration guide](docs/WARSH_INTEGRATION.md),
-[example](example/lib/riwayah_mushaf_example.dart) and
-[source notices](THIRD_PARTY_NOTICES.md).
-MP3Quran and EveryAyah providers return online audio URLs without downloading
-audio; Warsh numbering differences require verified mapping where documented.
+Run `flutter pub get`. Adjust `path` if your directory layout differs. Package
+fonts/assets are registered automatically; do not copy or rename them.
+A hosted `qcf_quran: ^0.0.5` dependency points to the published upstream release
+and does **not** guarantee these local Hafs/Warsh additions.
 
-For Hafs, `qcf_quran` bundles **604 page-specific QCF fonts**, with correct
-ligatures, verse endings, and scaling.
-
-> **Note**: Hafs page fonts are bundled for offline rendering. Warsh text, font
-> and all page tap regions are also local; artwork beyond page 3 needs internet
-> unless supplied locally by the app.
-
----
-
-## 📑 Table of Contents
-
-- [Features](#-features)
-- [Getting Started](#-getting-started)
-- [Basic Usage](#-basic-usage)
-  - [Full Quran](#full-quran-pageview)
-  - [Single Verse](#single-verse-rendering)
-  - [Responsive Design](#responsive-design-screenutil)
-  - [Data & Search](#data--search)
-- [Advanced Usage](#-advanced-usage)
-  - [Customization (Themes)](#customization-themes)
-  - [Developer Controls](#developer-controls)
-  - [Custom Builders](#custom-builders)
-  - [State Management](#state-management)
-- [Technical Details](#-technical-details-qcf-fonts)
-- [Support](#-support)
-
----
-
-## ✨ Features
-
-- **Page-Accurate Rendering**: 604 QCF fonts for exact Mushaf replication.
-- **`PageviewQuran` Widget**: Ready-to-use horizontally swipeable Quran (RTL format).
-- **`QcfVerse` Widget**: Render any single ayah with the correct font and verse number glyph.
-- **`QcfVerses` Widget**: Render multiple verses from a surah with proper alignment and responsive sizing.
-- **Rich Data API**: Get page numbers, surah names (EN/AR), juz info, verses, and more.
-- **Search**: Built-in simple Arabic text search.
-- **Full Customization**: Control colors, backgrounds, headers, and interactions via `QcfThemeData`.
-
----
-
-## 🚀 Getting Started
-
-1.  **Add dependency**:
-    ```yaml
-    dependencies:
-      qcf_quran: ^0.0.2
-    ```
-
-2.  **Use it**: The fonts are bundled, so no extra asset configuration is needed!
-
----
-
-## 🟢 Basic Usage
-
-### Full Quran PageView
-The easiest way to display the Quran. Handles paging, fonts, and layout automatically.
+## Display a mushaf
 
 ```dart
+import 'package:flutter/material.dart';
 import 'package:qcf_quran/qcf_quran.dart';
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
+class MushafScreen extends StatelessWidget {
+  const MushafScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
     body: PageviewQuran(
-      initialPageNumber: 1, // Start at Al-Fatiha
-      onPageChanged: (page) {
-        print("Current page: $page");
+      riwayah: QuranRiwayah.hafs, // Or QuranRiwayah.warsh.
+      initialPageNumber: 1,
+      theme: QcfThemeData.dark(),
+      onAyahTap: (reference) {
+        // Store reference.key: narration, surah, and native ayah number.
       },
     ),
   );
 }
 ```
 
-### Single Verse Rendering
-Render a specific verse anywhere in your app.
+Hafs is the default. Use `QcfPage` for one printed page, `QcfVerse` for one
+ayah, or `QcfVerses` for an inclusive flowing range within one surah.
+
+## Read the correct text
 
 ```dart
-QcfVerse(
-  surahNumber: 2, // Al-Baqarah
-  verseNumber: 255, // Ayat al-Kursi
-  sp: 1.sp, // Responsive font scaling
-  h: 1.h,   // Responsive height scaling
-)
+final hafs = getVerse(2, 255); // Top-level helpers always use Hafs.
+final warsh = await WarshMushaf.load();
+final verse = warsh.getVerse(2, 285);
+final pages = warsh.getPageNumbers(2, 285);
 ```
 
-### Multiple Verses Rendering
-Render a range of verses from a single surah.
+Native Hafs/Warsh ayah numbers may identify different passages. Never reuse
+Hafs tafsir or audio references for Warsh by number alone. Differences in ayah
+counts do not indicate missing Quran text. [Narration integration](docs/WARSH_INTEGRATION.md).
+
+## Audio URLs
 
 ```dart
-QcfVerses(
-  surahNumber: 1,   // Al-Fatiha
-  firstVerse: 1,
-  lastVerse: 7,     // All 7 verses
-  sp: 1.sp,         // Responsive font scaling
-  h: 1.h,           // Responsive height scaling
-)
-```
-
-### Responsive Design (ScreenUtil)
-For best results across mobile and tablets, use `flutter_screenutil` and pass scale factors.
-
-**Important**: Initialize ScreenUtil in your app:
-
-```dart
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(392.72727272727275, 800.7272727272727),
-      minTextAdapt: true,
-      builder: (context, child) {
-        return MaterialApp(
-          home: QuranPage(),
-        );
-      },
-    );
+final api = Mp3QuranApi();
+try {
+  final readers = await api.getReciters(riwayahId: 1, surahNumber: 1);
+  if (readers.isNotEmpty && readers.first.moshafs.isNotEmpty) {
+    final url = readers.first.moshafs.first.surahUri(1);
+    // Pass url to your application's player.
   }
+} finally {
+  api.close();
 }
 ```
 
-Then use `sp` and `h` parameters in widgets:
+Display only `availableSurahs` for the selected collection. EveryAyah also
+builds clip URLs without downloading recordings; incompatible numbering needs
+verified mapping. [Audio guide](docs/AUDIO.md).
 
-```dart
-PageviewQuran(
-  sp: 1.sp, // Font size scaling (higher = smaller font)
-  h: 1.h,   // Line height scaling (higher = less height)
-)
+## Offline use and performance
 
-QcfVerse(
-  surahNumber: 2,
-  verseNumber: 255,
-  sp: 1.sp, // Font size scaling
-  h: 1.h,   // Line height scaling
-)
+Hafs pages, and Warsh text/font/geometry, are local. Default Warsh pictures for
+pages 4–604 need internet. For fully offline Warsh pages, supply matching local
+artwork through `warshPagePictureBuilder`. Customize the loading state with
+`warshLoadingBuilder`, for example using your app's shimmer.
 
-QcfVerses(
-  surahNumber: 18,
-  firstVerse: 1,
-  lastVerse: 10,
-  sp: 1.sp, // Font size scaling
-  h: 1.h,   // Line height scaling
-)
+The assets occupy about **64 MiB before compression**, not an APK size estimate.
+Keep loading futures outside `build`, manage external controllers/clients,
+and profile actual target devices. [Performance guide](docs/PERFORMANCE_AND_TROUBLESHOOTING.md).
+
+## Develop
+
+```sh
+flutter pub get
+flutter analyze --no-preamble --no-fatal-infos
+flutter test
 ```
 
-**Understanding sp and h parameters:**
-- `sp`: Controls font size scaling. **Higher values = smaller font** (e.g., `1.2.sp` makes text smaller than `1.sp`)
-- `h`: Controls line height scaling. **Higher values = less height** (e.g., `1.2.h` reduces line spacing compared to `1.h`)
-- Default: Both are `1.0` if not specified
+Run the demo from `example/` using `flutter run`.
+[Contributing](CONTRIBUTING.md) · [Verification](docs/VALIDATION.md) ·
+[Git, generated API docs and release preparation](docs/MAINTENANCE.md).
 
-### Data & Search
-Access Quranic data easily:
+## Origins and rights
 
-```dart
-// Get Surah Name
-print(getSurahNameArabic(114)); // "الناس"
+The original package is [Mahmoud Atef's qcf_quran](https://github.com/m4hmoud-atef/qcf_quran).
+The code retains its [MIT license](LICENSE), and publisher assets retain their
+separate rights in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Renaming
+the display identity does not replace original authorship or asset terms.
+The original README also carried this notice, retained here:
 
-// Get Page Number for a Verse
-print(getPageNumber(2, 255)); // 42
+> This package and its bundled fonts are NOT for commercial use.
 
-// Search Arabic Text
-final results = searchWords("الرحمن");
-// Returns: { "occurences": 57, "result": [ { "suraNumber": 1, "verseNumber": 3 }, ... ] }
-```
-
----
-
-## 🔴 Advanced Usage
-
-### Customization (Themes)
-Customize colors, fonts, and visibility using `QcfThemeData`.
-
-```dart
-// Built-in Themes
-PageviewQuran(theme: QcfThemeData.dark())
-PageviewQuran(theme: QcfThemeData.sepia())
-
-// Custom Theme
-PageviewQuran(
-  theme: QcfThemeData(
-    verseTextColor: Colors.indigo.shade900,
-    pageBackgroundColor: Colors.grey.shade50,
-    verseBackgroundColor: (surah, verse) {
-      if (surah == 18 && verse == 1) return Colors.yellow.withOpacity(0.3);
-      return null;
-    },
-  ),
-)
-```
-
-### QcfVerses Advanced Features
-The `QcfVerses` widget supports all the customization options available in other widgets.
-
-```dart
-// With Theme
-QcfVerses(
-  surahNumber: 18,
-  firstVerse: 1,
-  lastVerse: 10,
-  sp: 1.sp,
-  h: 1.h,
-  theme: QcfThemeData.dark(),
-)
-
-// Custom Verse Number Formatting
-QcfVerses(
-  surahNumber: 112,
-  firstVerse: 1,
-  lastVerse: 4,
-  sp: 1.sp,
-  h: 1.h,
-  verseNumberFormatter: (num) => '($num)', // Western-style numbers
-)
-
-// Hide Verse Numbers
-QcfVerses(
-  surahNumber: 103,
-  firstVerse: 1,
-  lastVerse: 3,
-  sp: 1.sp,
-  h: 1.h,
-  showVerseNumbers: false,
-)
-
-// Verses Spanning Multiple Pages (automatic font handling)
-QcfVerses(
-  surahNumber: 2,
-  firstVerse: 1,
-  lastVerse: 20, // Spans multiple pages
-  sp: 1.sp,
-  h: 1.h,
-  // Widget automatically selects correct QCF font for each verse
-)
-```
-
-### Developer Controls
-Handle user interactions and scroll physics.
-
-```dart
-PageviewQuran(
-  // Interactions
-  onTap: (surah, verse) => print("Tapped $surah:$verse"),
-  onLongPress: (surah, verse) => print("Long pressed $surah:$verse"),
-  
-  // Physics
-  physics: BouncingScrollPhysics(), // e.g. iOS style bounce
-)
-```
-
-### Custom Builders
-Replace default elements (headers, basmala, verse numbers) with your own widgets.
-
-```dart
-final theme = QcfThemeData(
-  // Use an image for Basmala
-  basmalaBuilder: (surah) => Image.asset('assets/bismillah.png'),
-  
-  // Custom verse number styling
-  verseNumberBuilder: (surah, verse, text) {
-    return Container(
-      padding: EdgeInsets.all(4),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-      child: Text(text, style: TextStyle(color: Colors.white)),
-    );
-  },
-  
-  // Custom Surah Header
-  customHeaderBuilder: (surah) => MyCustomHeaderWidget(surah),
-);
-```
-
-### State Management
-For full control (e.g., using **Bloc** or **Provider**), use the `QcfPage` widget directly to build your own `PageView`.
-
-```dart
-PageView.builder(
-  itemBuilder: (context, index) {
-    return BlocProvider(
-      create: (_) => PageBloc(),
-      child: BlocBuilder<PageBloc, PageState>(
-        builder: (context, state) {
-          return QcfPage(
-            pageNumber: index + 1,
-            theme: state.theme, 
-            onTap: (s, v) => context.read<PageBloc>().add(VerseTapped(s, v)),
-          );
-        },
-      ),
-    );
-  },
-)
-```
-
----
-
-## ℹ️ Technical Details (QCF Fonts)
-
-- **Fonts**: Bundles 604 WOFF font files (`QCF_P001` to `QCF_P604`).
-- **Glyphs**: Verse numbers and symbols are handled via the `QCF_BSML` family.
-- **Logic**: `QcfVerse` automatically resolves the correct font family for the requested page number.
-- **Normalization**: Helper functions `normalise()` and `removeDiacritics()` are available for search implementation.
-
----
-
-## ❤️ Support
-
-If you find this package useful, consider buying me a coffee!
-
-<a href="https://buymeacoffee.com/m4hmoudd" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
----
-
-## 📜 License & Credits
-
-> **Disclaimer**: This package and its bundled fonts are **NOT for commercial use**.
-
-- **Code**: MIT License.
-- **Fonts**: **King Fahd Complex for the Printing of the Holy Quran (KFGQPC)**.
-- **Data**: Mapped internally from standard datasets.
-
----
-
-## 📞 Contact
-
-- **Package Developer (Mahmoud Atef)**: [GitHub (@m4hmoud-atef)](https://github.com/m4hmoud-atef)
-- **Font Developer**: Discord `ayman24x7`
+The existing code license and asset notices remain unchanged. Source hashes
+and structural tests do not constitute an independent scholarly review of
+all Quran letters, page artwork or audible clip boundaries.

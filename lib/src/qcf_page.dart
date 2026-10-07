@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'qcf_theme_data.dart';
-import 'data/qcf_quran.dart';
+import 'data/mushaf_riwayat.dart';
 import 'header_widget.dart';
 import 'riwayah.dart';
 import 'warsh/warsh_mushaf.dart';
@@ -297,7 +297,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
                   text: " ﱁ  ﱂﱃﱄ\n",
                   style: TextStyle(
                     fontFamily: "QCF_P001",
-                    package: 'qcf_quran',
+                    package: 'mushaf_riwayat',
                     fontSize:
                         getScreenType(context) == ScreenType.large
                             ? widget.theme.basmalaFontSizeLarge * widget.sp
@@ -333,7 +333,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
             recognizer: recognizer,
             style: TextStyle(
               fontFamily: pageFont,
-              package: 'qcf_quran',
+              package: 'mushaf_riwayat',
               color: widget.theme.verseNumberColor,
               height: widget.theme.verseNumberHeight * widget.h,
               backgroundColor:
@@ -390,7 +390,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
             textDirection: TextDirection.rtl,
             style: TextStyle(
               fontFamily: pageFont,
-              package: 'qcf_quran',
+              package: 'mushaf_riwayat',
               fontSize:
                   isPortrait
                       ? baseFontSize

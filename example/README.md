@@ -1,6 +1,6 @@
 # Mushaf Riwayat demo
 
-A Flutter application using the local `qcf_quran` package. It demonstrates
+A Flutter application using the local `mushaf_riwayat` package. It demonstrates
 Hafs pages, verse ranges, and a Hafs/Warsh reader with narration selection,
 page navigation, ayah actions, highlights and audio URL catalogs.
 

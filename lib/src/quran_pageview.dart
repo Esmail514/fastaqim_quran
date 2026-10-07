@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'qcf_theme_data.dart';
 import 'qcf_page.dart';
-import 'data/qcf_quran.dart';
+import 'data/mushaf_riwayat.dart';
 import 'riwayah.dart';
 import 'warsh/warsh_mushaf.dart';
 import 'warsh/warsh_page.dart';

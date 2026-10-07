@@ -1,7 +1,7 @@
 # Public API reference
 
 ```dart
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 ```
 
 Use this entry point instead of internal `lib/src/` imports. Generated HTML
@@ -86,7 +86,7 @@ clear nullable fields. Prefer `theme` over legacy widget color properties.
 | `HafsText.getSourceVerse(surah, verse)` | Original publisher text including its end-marker glyph |
 | `HafsText.getVerse(surah, verse)` | Display slice without the source end marker |
 | `HafsText.getSearchVerse(surah, verse)` | Publisher-provided search text |
-| `HafsText.fontFamily` | `QCF_HafsUnicode`; use `package: 'qcf_quran'` in `TextStyle` |
+| `HafsText.fontFamily` | `QCF_HafsUnicode`; use `package: 'mushaf_riwayat'` in `TextStyle` |
 | `quranText` / `activeQuranText` | Read-only Hafs corpus |
 | `invalidateVerseIndex()` | Resets the legacy derived lookup index; normally unnecessary |
 

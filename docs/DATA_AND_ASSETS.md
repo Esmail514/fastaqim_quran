@@ -4,7 +4,7 @@
 
 | Path | Role |
 | --- | --- |
-| `lib/qcf_quran.dart` | Public entry point and exports |
+| `lib/mushaf_riwayat.dart` | Public entry point and exports |
 | `lib/src/qcf_page.dart`, `quran_pageview.dart` | Fixed page rendering, interaction and paging |
 | `lib/src/qcf_verse.dart`, `qcf_verses.dart` | Single/range text widgets |
 | `lib/src/qcf_theme_data.dart`, `header_widget.dart`, `helpers/` | Theme, heading and numeral utilities |
@@ -32,7 +32,7 @@ file: its old readable fields mixed Warsh strings with Hafs positions.
 QCF glyphs use `QCF_P001` through `QCF_P604`; normal publisher text uses
 `QCF_HafsUnicode`. Warsh source text is `warshData_v2-1.json`, with font family
 `QCF_Warsh`. When rendering source Unicode text directly, specify
-`package: 'qcf_quran'` along with the matching font family.
+`package: 'mushaf_riwayat'` along with the matching font family.
 
 Both narrations contain 114 surahs and 604 printed pages. Hafs uses 6236
 native ayahs; Warsh uses 6214. Never align corpora by array index.

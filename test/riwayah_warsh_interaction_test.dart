@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcf_quran/src/qcf_theme_data.dart';
-import 'package:qcf_quran/src/riwayah.dart';
-import 'package:qcf_quran/src/warsh/warsh_mushaf.dart';
-import 'package:qcf_quran/src/warsh/warsh_page.dart';
+import 'package:mushaf_riwayat/src/qcf_theme_data.dart';
+import 'package:mushaf_riwayat/src/riwayah.dart';
+import 'package:mushaf_riwayat/src/warsh/warsh_mushaf.dart';
+import 'package:mushaf_riwayat/src/warsh/warsh_page.dart';
 
 const _first = QuranAyahReference(
   riwayah: QuranRiwayah.warsh,

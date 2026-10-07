@@ -2,8 +2,8 @@
 
 A Flutter Quran package for fixed mushaf pages, readable publisher text,
 narration-aware ayah interaction, and audio URL providers. **Mushaf Riwayat**
-is its display identity; the current technical package/import name remains
-**`qcf_quran`** for compatibility with existing applications.
+is its display identity; its Dart package name and public entry point are
+**`mushaf_riwayat`** and **`lib/mushaf_riwayat.dart`**.
 
 This local Fastaqim edition currently supports **Hafs and Warsh**. The name
 allows future narration support; it does not claim that other narrations are
@@ -36,20 +36,21 @@ located next to the `custom_packages` directory:
 
 ```yaml
 dependencies:
-  qcf_quran:
-    path: ../custom_packages/qcf_quran
+  mushaf_riwayat:
+    path: ../custom_packages/mushaf_riwayat
 ```
 
 Run `flutter pub get`. Adjust `path` if your directory layout differs. Package
 fonts/assets are registered automatically; do not copy or rename them.
-A hosted `qcf_quran: ^0.0.5` dependency points to the published upstream release
-and does **not** guarantee these local Hafs/Warsh additions.
+This edition has not been published to pub.dev. Use the local path dependency
+until a hosted release is available. See [migration](docs/MIGRATION.md) when
+updating an application that used the former package name.
 
 ## Display a mushaf
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 class MushafScreen extends StatelessWidget {
   const MushafScreen({super.key});

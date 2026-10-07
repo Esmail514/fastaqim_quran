@@ -1,4 +1,4 @@
-# دمج حفص وورش في qcf_quran
+# دمج حفص وورش في mushaf_riwayat
 
 أضيف دعم الروايات إلى الباكج نفسه. تبقى حفص هي القيمة الافتراضية، وتبقى رموز عرضها وخطوط صفحاتها الأصلية وواجهات قراءتها السابقة متاحة. صُحح ربط النص المقروء لحفص بمصدره الأصلي كما هو موضح أدناه.
 
@@ -20,7 +20,7 @@ Text(
   textDirection: TextDirection.rtl,
   style: const TextStyle(
     fontFamily: HafsText.fontFamily,
-    package: 'qcf_quran',
+    package: 'mushaf_riwayat',
   ),
 );
 ```
@@ -30,7 +30,7 @@ Text(
 ## عرض المصحف والنقر
 
 ```dart
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 PageviewQuran(
   riwayah: QuranRiwayah.warsh,

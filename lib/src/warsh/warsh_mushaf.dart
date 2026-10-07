@@ -129,7 +129,8 @@ class WarshPageData {
 /// network SVGs by default; a widget's picture builder can supply local art.
 class WarshMushaf {
   static Future<WarshMushaf>? _defaultLoad;
-  static const _manifestAsset = 'packages/qcf_quran/assets/warsh/manifest.json';
+  static const _manifestAsset =
+      'packages/mushaf_riwayat/assets/warsh/manifest.json';
 
   final String editionId;
   final String fontFamily;
@@ -216,7 +217,7 @@ class WarshMushaf {
     final text =
         jsonDecode(
               await bundle.loadString(
-                'packages/qcf_quran/${manifest['textAsset']}',
+                'packages/mushaf_riwayat/${manifest['textAsset']}',
               ),
             )
             as List<dynamic>;
@@ -293,7 +294,7 @@ class WarshMushaf {
     final raw =
         jsonDecode(
               await _bundle!.loadString(
-                'packages/qcf_quran/${descriptor['geometryAsset']}',
+                'packages/mushaf_riwayat/${descriptor['geometryAsset']}',
               ),
             )
             as List<dynamic>;

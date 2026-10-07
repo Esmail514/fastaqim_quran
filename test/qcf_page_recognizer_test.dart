@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 List<TextSpan> _verses(WidgetTester tester) {
   final spans = <TextSpan>[];

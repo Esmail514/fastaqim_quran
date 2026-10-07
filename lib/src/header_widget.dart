@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'qcf_theme_data.dart';
-import 'data/qcf_quran.dart';
+import 'data/mushaf_riwayat.dart';
 import 'helpers/surah_font_helper.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -37,10 +37,16 @@ class HeaderWidget extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Image(
-              image: const AssetImage("assets/mainframe.png", package: 'qcf_quran'),
-              width:isPortrait? getScreenType(context) == ScreenType.large 
-                  ? effectiveTheme.headerWidthLarge 
-                  : effectiveTheme.headerWidthSmall:MediaQuery.of(  context).size.width * 0.8,
+              image: const AssetImage(
+                "assets/mainframe.png",
+                package: 'mushaf_riwayat',
+              ),
+              width:
+                  isPortrait
+                      ? getScreenType(context) == ScreenType.large
+                          ? effectiveTheme.headerWidthLarge
+                          : effectiveTheme.headerWidthSmall
+                      : MediaQuery.of(context).size.width * 0.8,
             ),
             RichText(
               textAlign: TextAlign.center,
@@ -48,7 +54,7 @@ class HeaderWidget extends StatelessWidget {
                 text: "surah${suraNumber.toString().padLeft(3, '0')}",
                 style: TextStyle(
                   fontFamily: SurahFontHelper.fontFamily,
-                  package: 'qcf_quran',
+                  package: 'mushaf_riwayat',
                   fontSize:isPortrait?  getScreenType(context) == ScreenType.large
                       ? effectiveTheme.headerFontSizeLarge
                       : effectiveTheme.headerFontSizeSmall:MediaQuery.of(context).size.width * 0.05,

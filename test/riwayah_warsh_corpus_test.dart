@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 Map<String, dynamic> _object(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
@@ -15,7 +15,7 @@ List<Map<String, dynamic>> _rows(String path) =>
 class _FileAssetBundle extends CachingAssetBundle {
   @override
   Future<ByteData> load(String key) async {
-    final localPath = key.replaceFirst('packages/qcf_quran/', '');
+    final localPath = key.replaceFirst('packages/mushaf_riwayat/', '');
     final bytes = await File(localPath).readAsBytes();
     return ByteData.sublistView(bytes);
   }

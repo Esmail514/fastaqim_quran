@@ -78,7 +78,10 @@ class _WarshPageState extends State<WarshPage> {
         if (customPicture) return _LoadedWarshPage(page, null);
         final BytesLoader loader;
         if (page.svgAsset != null) {
-          loader = SvgAssetLoader(page.svgAsset!, packageName: 'qcf_quran');
+          loader = SvgAssetLoader(
+            page.svgAsset!,
+            packageName: 'mushaf_riwayat',
+          );
         } else if (page.svgUri != null) {
           loader = SvgNetworkLoader(page.svgUri.toString());
         } else {

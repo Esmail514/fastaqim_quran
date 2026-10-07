@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcf_quran/src/riwayah.dart';
+import 'package:mushaf_riwayat/src/riwayah.dart';
 
 void main() {
   test('bookmarks with equal numbers in Hafs and Warsh remain distinct', () {

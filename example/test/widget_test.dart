@@ -7,7 +7,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:example/main.dart';
+import 'package:mushaf_riwayat_example/main.dart';
 
 void main() {
   testWidgets('opens the Hafs and Warsh mushaf example', (

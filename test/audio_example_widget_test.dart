@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 // Exercise the separate demo app without adding it as a package dependency.
 // ignore: avoid_relative_lib_imports
@@ -50,7 +50,10 @@ void main() {
       );
       expect(ayahText.data, getVerse(1, 1));
       expect(ayahText.data, startsWith('بِسۡمِ'));
-      expect(ayahText.style!.fontFamily, 'packages/qcf_quran/QCF_HafsUnicode');
+      expect(
+        ayahText.style!.fontFamily,
+        'packages/mushaf_riwayat/QCF_HafsUnicode',
+      );
       expect(requests, isEmpty);
       await tester.tap(find.text('رابط تلاوة الآية'));
       await tester.pumpAndSettle();

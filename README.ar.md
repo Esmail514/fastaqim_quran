@@ -1,8 +1,8 @@
 # مصحف الروايات — Mushaf Riwayat
 
 باكج Flutter لعرض المصحف والنص الأصلي والتفاعل مع الآيات وتوفير روابط
-التلاوات. اسم الهوية هو **مصحف الروايات**، واسم الاستيراد الحالي **`qcf_quran`**
-محفوظ للتوافق مع التطبيقات التي تستخدمه.
+التلاوات. اسم الهوية هو **مصحف الروايات**، واسم الباكج التقني **`mushaf_riwayat`**،
+ونقطة الاستيراد العامة **`lib/mushaf_riwayat.dart`**.
 
 يدعم الباكج حاليًا **حفص وورش**. الاسم مناسب للتوسع إلى روايات أخرى؛ لا يعني
 أنها مدعومة بالفعل. هذه النسخة المحلية في فاستقم تحمل الرقم `0.0.5` مع
@@ -32,19 +32,20 @@
 
 ```yaml
 dependencies:
-  qcf_quran:
-    path: ../custom_packages/qcf_quran
+  mushaf_riwayat:
+    path: ../custom_packages/mushaf_riwayat
 ```
 
 نفّذ `flutter pub get`. غيّر المسار إن اختلف ترتيب مجلداتك. الخطوط والأصول
 مضافة داخل الباكج ولا تحتاج إلى نسخها أو تسجيلها مرة أخرى في التطبيق.
-الإصدار المنشور على pub.dev بنفس الرقم لا يضمن وجود إضافات هذه النسخة المحلية.
+هذه النسخة لم تُنشر على pub.dev بعد؛ استخدم المسار المحلي حتى إصدارها.
+راجع [دليل الانتقال](docs/MIGRATION.md) عند تحديث تطبيق يستخدم الاسم السابق.
 
 ## عرض المصحف
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 PageviewQuran(
   riwayah: QuranRiwayah.warsh,

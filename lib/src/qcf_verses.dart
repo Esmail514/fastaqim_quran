@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'qcf_theme_data.dart';
-import 'data/qcf_quran.dart';
+import 'data/mushaf_riwayat.dart';
 import 'riwayah.dart';
 import 'warsh/warsh_mushaf.dart';
 import 'warsh/warsh_verse_text.dart';
@@ -217,7 +217,7 @@ class QcfVerses extends StatelessWidget {
                         : effectiveFontSize,
                 height: effectiveTheme.verseNumberHeight / h,
                 fontFamily: fontFamily,
-                package: 'qcf_quran',
+                package: 'mushaf_riwayat',
                 color: effectiveTheme.verseNumberColor,
                 backgroundColor: effectiveTheme.verseNumberBackgroundColor,
               ),
@@ -236,7 +236,7 @@ class QcfVerses extends StatelessWidget {
                 fontSize: effectiveFontSize,
                 height: effectiveTheme.verseNumberHeight / h,
                 fontFamily: fontFamily,
-                package: 'qcf_quran',
+                package: 'mushaf_riwayat',
                 color: effectiveTheme.verseNumberColor,
                 backgroundColor: effectiveTheme.verseNumberBackgroundColor,
               ),
@@ -263,7 +263,7 @@ class QcfVerses extends StatelessWidget {
           text: verseTextWithoutNumber,
           style: TextStyle(
             fontFamily: fontFamily,
-            package: 'qcf_quran',
+            package: 'mushaf_riwayat',
             fontSize: effectiveFontSize,
             height: effectiveTheme.verseHeight / h,
             letterSpacing: effectiveTheme.letterSpacing,

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcf_quran/src/audio/quran_audio.dart';
-import 'package:qcf_quran/src/data/qcf_quran.dart' as hafs;
-import 'package:qcf_quran/src/riwayah.dart';
+import 'package:mushaf_riwayat/src/audio/quran_audio.dart';
+import 'package:mushaf_riwayat/src/data/mushaf_riwayat.dart' as hafs;
+import 'package:mushaf_riwayat/src/riwayah.dart';
 
 void main() {
   test('Hafs reference resolves to padded EveryAyah URL without network', () {

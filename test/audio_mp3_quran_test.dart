@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:qcf_quran/src/audio/quran_audio.dart';
-import 'package:qcf_quran/src/riwayah.dart';
+import 'package:mushaf_riwayat/src/audio/quran_audio.dart';
+import 'package:mushaf_riwayat/src/riwayah.dart';
 
 void main() {
   test(

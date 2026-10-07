@@ -1,9 +1,9 @@
-import 'package:example/quran_home_page.dart';
-import 'package:example/qcf_verses_example_page.dart';
-import 'package:example/riwayah_mushaf_example.dart';
+import 'package:mushaf_riwayat_example/quran_home_page.dart';
+import 'package:mushaf_riwayat_example/qcf_verses_example_page.dart';
+import 'package:mushaf_riwayat_example/riwayah_mushaf_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           data: MediaQuery.of(
             context,
           ).copyWith(textScaler: TextScaler.linear(1)),
-          child: MaterialApp(title: 'Quran qcf Demo', home: const MyHomePage()),
+          child: MaterialApp(title: 'Mushaf Riwayat', home: const MyHomePage()),
         );
       },
     );
@@ -40,7 +40,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("qcf_quran Demo"),
+        title: const Text("Mushaf Riwayat Demo"),
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
@@ -50,7 +50,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             /// Header
             Text(
-              "📖 qcf_quran — High-fidelity Quran Mushaf rendering",
+              "📖 Mushaf Riwayat — High-fidelity Quran Mushaf rendering",
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 12),

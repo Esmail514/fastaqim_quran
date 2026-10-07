@@ -1,7 +1,9 @@
 ## Unreleased
 
-- Document the local edition as Mushaf Riwayat (مصحف الروايات), retaining the
-  `qcf_quran` import namespace and current Hafs/Warsh support.
+- Rename the local edition to Mushaf Riwayat (مصحف الروايات) with the Dart
+  package name `mushaf_riwayat` and public entry `mushaf_riwayat.dart`.
+- Migrate the example, Fastaqim integration and font/asset package keys to
+  the new name, preserving the API, Quran data, font families and local Git history.
 - Add bilingual getting-started guides, public API/audio/assets/performance
   documentation, contributor and maintenance guides, and expansion criteria.
 - Prepare independent local Git tracking while preserving publisher asset bytes.

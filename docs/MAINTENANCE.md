@@ -1,9 +1,11 @@
 # Local Git and maintenance
 
 Display name: **Mushaf Riwayat — مصحف الروايات**. Dart package name:
-**`qcf_quran`**. Its import/asset namespace is deliberately unchanged.
-`pubspec.yaml` currently retains upstream homepage/repository/issue links;
-these identify the original project, not a newly published fork.
+**`mushaf_riwayat`**. Imports, font package names and asset keys use this name.
+The package folder is `custom_packages/mushaf_riwayat`; its local Git history
+was preserved during the rename. See [migration](MIGRATION.md) for consumers.
+`pubspec.yaml` omits repository metadata until an actual fork URL exists;
+the README retains the original project's attribution.
 
 ## Independent repository
 
@@ -32,7 +34,7 @@ Use explicit paths to stage additional code/assets after reviewing them.
 For a recoverable history backup outside this folder:
 
 ```sh
-git bundle create ../qcf_quran-backup.bundle --all
+git bundle create ../mushaf_riwayat-backup.bundle --all
 ```
 
 If you later create your own remote repository, configure its actual URL:
@@ -87,7 +89,7 @@ HTML describes the latest package source.
 3. Preserve asset manifests, source notices, hashes and attribution.
 4. Set the intended new version and update `CHANGELOG.md` only when actually
    preparing that release; the current docs do not imply a new published version.
-5. Replace upstream metadata with the real fork URLs if a fork is published.
+5. Add the actual fork's homepage/repository/issue URLs once they exist.
 6. Run `flutter pub publish --dry-run` to inspect packaging before deciding
    whether to publish. Publishing itself is a separate deliberate action.
 

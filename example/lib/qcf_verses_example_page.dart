@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qcf_quran/qcf_quran.dart';
+import 'package:mushaf_riwayat/mushaf_riwayat.dart';
 
 /// Example page demonstrating the QcfVerses widget
 class QcfVersesExamplePage extends StatefulWidget {
@@ -191,7 +191,7 @@ class _QcfVersesExamplePageState extends State<QcfVersesExamplePage> {
                       text: SurahFontHelper.formatSurahText(
                         'surah001 surah002 surah114',
                         style: const TextStyle(fontSize: 40, color: Colors.blue),
-                        package: 'qcf_quran',
+                        package: 'mushaf_riwayat',
                       ),
                     ),
                   ],

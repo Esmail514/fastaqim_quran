@@ -1,0 +1,44 @@
+# Dart / Flutter generated files
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+**/build/
+**/coverage/
+docs/generated/
+**/pubspec.lock
+
+# IDE and local platform configuration
+.idea/
+*.iml
+.vscode/
+**/.gradle/
+**/local.properties
+**/key.properties
+**/Pods/
+**/.symlinks/
+**/Flutter/ephemeral/
+**/Flutter/Generated.xcconfig
+**/Flutter/flutter_export_environment.sh
+**/GeneratedPluginRegistrant.*
+**/flutter/generated_plugin_registrant.*
+**/flutter/generated_plugins.cmake
+**/flutter/ephemeral/
+**/.DS_Store
+Thumbs.db
+
+# Local credentials and signing material
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p12
+*.pem
+**/google-services.json
+**/GoogleService-Info.plist
+
+# Local diagnostics
+*.log
+__pycache__/
+*.pyc

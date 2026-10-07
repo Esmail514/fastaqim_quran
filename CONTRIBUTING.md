@@ -1,4 +1,4 @@
-# Contributing to Riwayat Quran
+# Contributing to Mushaf Riwayat
 
 The public package name stays `qcf_quran`. Work from this package root;
 the nested local repository is separate from the surrounding app history.

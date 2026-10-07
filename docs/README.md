@@ -1,4 +1,4 @@
-# دليل روايات القرآن / Documentation
+# دليل مصحف الروايات / Documentation
 
 ابدأ بـ[README العربي](../README.ar.md) أو [English README](../README.md).
 هذه الأدلة تصف النسخة المحلية الموجودة في هذا المجلد.

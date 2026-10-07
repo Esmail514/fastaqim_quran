@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Document the local edition as Riwayat Quran (روايات القرآن), retaining the
+- Document the local edition as Mushaf Riwayat (مصحف الروايات), retaining the
   `qcf_quran` import namespace and current Hafs/Warsh support.
 - Add bilingual getting-started guides, public API/audio/assets/performance
   documentation, contributor and maintenance guides, and expansion criteria.

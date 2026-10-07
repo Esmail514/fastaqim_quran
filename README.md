@@ -1,7 +1,7 @@
-# Riwayat Quran — روايات القرآن
+# Mushaf Riwayat — مصحف الروايات
 
 A Flutter Quran package for fixed mushaf pages, readable publisher text,
-narration-aware ayah interaction, and audio URL providers. **Riwayat Quran**
+narration-aware ayah interaction, and audio URL providers. **Mushaf Riwayat**
 is its display identity; the current technical package/import name remains
 **`qcf_quran`** for compatibility with existing applications.
 

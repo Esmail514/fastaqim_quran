@@ -1,6 +1,6 @@
 # Local Git and maintenance
 
-Display name: **Riwayat Quran — روايات القرآن**. Dart package name:
+Display name: **Mushaf Riwayat — مصحف الروايات**. Dart package name:
 **`qcf_quran`**. Its import/asset namespace is deliberately unchanged.
 `pubspec.yaml` currently retains upstream homepage/repository/issue links;
 these identify the original project, not a newly published fork.

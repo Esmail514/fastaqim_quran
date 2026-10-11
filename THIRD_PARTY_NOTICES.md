@@ -14,9 +14,33 @@ and publication permission from King Fahd Glorious Quran Printing Complex;
 named contributors, restricts use to charitable purposes, and prohibits sale.
 The `surah-name-v2.woff` name table identifies `qul.tarteel.ai` / IcoMoon but
 contains no standalone license. These findings are not permission to
-redistribute those fonts. Obtain and record the applicable permissions before
-a public hosted release; the code's MIT license does not clear third-party
+redistribute those fonts. Record applicable published usage terms or written
+authorization covering these exact files before a public hosted release;
+an applicable public grant can suffice without a separate personal letter.
+The code's MIT license does not clear third-party
 font rights. See [Publishing](doc/PUBLISHING.md) and [Use policy](USE_POLICY.md).
+
+### Follow-up on the publisher's public permission — 2026-10-11
+
+The maintainer reports that the fonts originate from the Complex and expects
+publication to be permitted. This is provenance information, not a new license
+grant. The publisher's digital-edition permission reproduced below supports
+software and website use for the materials it covers. The remaining task is to
+establish its scope for the inherited QCF files and any contributors' additions.
+
+[QUL's QPC V4 resource](https://qul.tarteel.ai/resources/font/240) describes
+bundling fonts in applications and serving them from a website or CDN.
+[QUL's credits](https://qul.tarteel.ai/credits) distinguish Ayman Siddiqui's
+tajweed contributions from the Complex's original fonts and images, and
+[QUL's FAQ](https://qul.tarteel.ai/faq) requires checking each resource's
+author-specific terms. These pages do not establish a blanket license for all
+inherited files in this package. No byte-for-byte match with that download has
+been established in this review.
+
+Direct requests to `fonts.qurancomplex.gov.sa` and the publisher's digital
+usage-rights page timed out during this follow-up. That access failure proves
+neither permission nor prohibition. A source download and its applicable
+published terms may resolve this without separate correspondence.
 
 The following provenance applies to its specified assets only.
 

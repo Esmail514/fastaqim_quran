@@ -20,7 +20,18 @@ class WarshVerse {
     required this.text,
     required this.juzNumber,
     required Iterable<int> pageNumbers,
-  }) : pageNumbers = List.unmodifiable(pageNumbers);
+  }) : pageNumbers = List.unmodifiable(pageNumbers) {
+    if (surahNumber < 1 ||
+        surahNumber > 114 ||
+        verseNumber < 1 ||
+        juzNumber < 1 ||
+        juzNumber > 30 ||
+        this.pageNumbers.isEmpty ||
+        this.pageNumbers.any((page) => page < 1 || page > 604) ||
+        this.pageNumbers.toSet().length != this.pageNumbers.length) {
+      throw ArgumentError('Invalid Warsh ayah reference, juz or pages.');
+    }
+  }
 
   QuranAyahReference get reference => QuranAyahReference(
     riwayah: QuranRiwayah.warsh,
@@ -190,12 +201,31 @@ class WarshMushaf {
       verses: verseList,
       descriptors: {},
     );
+    for (final entry in result._surahCounts.entries) {
+      for (var verse = 1; verse <= entry.value; verse++) {
+        if (!result._verses.containsKey((entry.key, verse))) {
+          throw ArgumentError('Custom Warsh ayah numbering has a gap.');
+        }
+      }
+    }
+    for (final verse in verseList) {
+      if (!verse.pageNumbers.every(pageNumbers.contains)) {
+        throw ArgumentError(
+          'A custom Warsh ayah refers to an unavailable page.',
+        );
+      }
+    }
     for (final page in pageList) {
       for (final region in page.regions) {
-        result.getVerse(
+        final verse = result.getVerse(
           region.reference.surahNumber,
           region.reference.verseNumber,
         );
+        if (!verse.pageNumbers.contains(page.pageNumber)) {
+          throw ArgumentError(
+            'A custom Warsh region is on the wrong ayah page.',
+          );
+        }
       }
       result._pageCache[page.pageNumber] = Future.value(page);
     }

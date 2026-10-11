@@ -239,7 +239,7 @@ String getVerseQCF(
   int verseNumber, {
   bool verseEndSymbol = true,
 }) {
-  final entry = _verseIndex[surahNumber * 100000 + verseNumber];
+  final entry = getVerseData(surahNumber, verseNumber);
   if (entry == null) {
     throw "No verse found with given surahNumber and verseNumber.\n\n";
   }
@@ -255,7 +255,7 @@ String getVerseNumberQCF(
   int verseNumber, {
   bool verseEndSymbol = true,
 }) {
-  final entry = _verseIndex[surahNumber * 100000 + verseNumber];
+  final entry = getVerseData(surahNumber, verseNumber);
   if (entry == null) {
     throw "No verse found with given surahNumber and verseNumber.\n\n";
   }

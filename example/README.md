@@ -38,6 +38,6 @@ flutter analyze --no-preamble --no-fatal-infos
 ```
 
 The example has existing informational lints, documented in
-[VALIDATION.md](../docs/VALIDATION.md). See [the package README](../README.md)
-and [audio integration](../docs/AUDIO.md) before copying demo code into a
+[VALIDATION.md](../doc/VALIDATION.md). See [the package README](../README.md)
+and [audio integration](../doc/AUDIO.md) before copying demo code into a
 production application.

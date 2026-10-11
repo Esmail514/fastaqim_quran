@@ -156,7 +156,7 @@ class _QcfVerseState extends State<QcfVerse> {
 
     final String fontFamily = "QCF_P${pageNumber.toString().padLeft(3, '0')}";
     final double effectiveFontSize =
-        widget.fontSize ?? pageFontSize / widget.sp;
+        widget.fontSize ?? effectiveTheme.fontSize ?? pageFontSize / widget.sp;
 
     // getVerseQCF(verseEndSymbol: false) now correctly strips both the glyph
     // and trailing '\n' (if any), returning pure verse text.

@@ -30,4 +30,13 @@ void main() {
     invalidateVerseIndex();
     expect(getVerseData(1, 1), quranText.first);
   });
+
+  test('QCF glyph lookups reject references with colliding packed keys', () {
+    for (final (surah, verse) in [(0, 100001), (1, 100001), (3, -99999)]) {
+      expect(() => getVerseQCF(surah, verse), throwsA(isA<String>()));
+      expect(() => getVerseNumberQCF(surah, verse), throwsA(isA<String>()));
+    }
+    expect(getVerseQCF(1, 1), quranText.first['qcfData']);
+    expect(getVerseNumberQCF(1, 1), isNotEmpty);
+  });
 }

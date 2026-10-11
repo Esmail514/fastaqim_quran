@@ -1,18 +1,15 @@
 name: mushaf_riwayat
 description: "Hafs and Warsh Quran rendering with clickable ayahs, fixed mushaf pages, bundled Quran data, and online MP3Quran/EveryAyah audio URL providers."
-version: 0.0.5
+version: 0.1.0
+homepage: https://github.com/Esmail514/mushaf_riwayat
+repository: https://github.com/Esmail514/mushaf_riwayat
+issue_tracker: https://github.com/Esmail514/mushaf_riwayat/issues
 topics:
   - flutter
   - quran
   - arabic
   - fonts
   - qcf
-screenshots:
-  - description: Quran page view
-    path: assets/Screenshot_1756290211.png
-  - description: Search and verse
-    path: assets/Screenshot_1756290218.png
-
 environment:
   sdk: ">=3.7.0 <4.0.0"
   flutter: ">=3.29.0"
@@ -34,7 +31,9 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/
+    - assets/mainframe.png
+    - assets/mainpagenum_no.png
+    - assets/mainpagenum.png
     - assets/warsh/manifest.json
     - assets/warsh/source/
     - assets/warsh/pages/

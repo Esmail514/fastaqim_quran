@@ -112,6 +112,7 @@ class QcfVerses extends StatelessWidget {
       key: textKey,
       textDirection: TextDirection.rtl,
       textAlign: textAlign,
+      textScaler: MediaQuery.textScalerOf(context),
       locale: const Locale("ar"),
       text: TextSpan(
         children: verseSpans,
@@ -155,7 +156,7 @@ class QcfVerses extends StatelessWidget {
       verseNumber++
     ) {
       // Get the verse text and page information
-      String verseText = getVerseQCF(
+      final verseText = getVerseQCF(
         surahNumber,
         verseNumber,
         verseEndSymbol: true,
@@ -165,18 +166,9 @@ class QcfVerses extends StatelessWidget {
 
       // Get page data to check if this verse starts a page
       final pageData = getPageData(pageNumber);
-      bool isPageStart = pageData[0]["start"] == verseNumber;
-
-      // Add thin space after first character if verse starts a page
-      if (isPageStart && verseText.length > 1) {
-        verseText =
-            "${verseText.substring(0, 1)}\u200A${verseText.substring(1)}";
-      }
-
-      // Remove leading newline for the first verse in the range
-      if (verseNumber == firstVerse && verseText.startsWith("\n")) {
-        verseText = verseText.replaceFirst("\n", "");
-      }
+      final isPageStart =
+          pageData[0]["surah"] == surahNumber &&
+          pageData[0]["start"] == verseNumber;
 
       // Determine if verse ends with newline
       bool endsWithNewline = verseText.endsWith("\n");
@@ -187,10 +179,21 @@ class QcfVerses extends StatelessWidget {
         verseNumber,
         verseEndSymbol: false,
       );
+      // Apply layout adjustments to the text actually rendered below.
+      if (verseNumber == firstVerse &&
+          verseTextWithoutNumber.startsWith("\n")) {
+        verseTextWithoutNumber = verseTextWithoutNumber.substring(1);
+      }
+      if (isPageStart && verseTextWithoutNumber.length > 1) {
+        verseTextWithoutNumber =
+            "${verseTextWithoutNumber.substring(0, 1)}\u200A${verseTextWithoutNumber.substring(1)}";
+      }
 
       // Calculate responsive font size
       double effectiveFontSize =
-          fontSize ?? (getFontSize(pageNumber, context) / sp);
+          fontSize ??
+          effectiveTheme.fontSize ??
+          (getFontSize(pageNumber, context) / sp);
 
       // Build verse number span
       List<InlineSpan> verseChildren = [];

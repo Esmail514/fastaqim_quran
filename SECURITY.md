@@ -11,11 +11,13 @@ does not require Supabase credentials or bundle an authentication service.
   application; they are caller-controlled extension points.
 - Do not display raw network exceptions as user-facing error messages.
 
-For a possible security issue, contact the maintainer privately through an
-already established channel and include a minimal reproduction without
-credentials or user data. No dedicated private reporting endpoint has been
-configured for this local repository. Upstream issue links identify the
-original project and are not a private disclosure channel.
+For a possible security issue, email the maintainer privately at
+[support.fastaqim@gmail.com](mailto:support.fastaqim@gmail.com) or
+[asasesmail514@gmail.com](mailto:asasesmail514@gmail.com). Include the package
+version, affected platform and a minimal reproduction without credentials or
+user data. No response deadline is guaranteed. Other contact options are in
+[SUPPORT.md](SUPPORT.md). Upstream issue links identify the original project
+and are not this edition's private disclosure channel.
 
 For Quran source/numbering issues, record the narration, edition, surah/ayah,
 source manifest and exact observed discrepancy. Preserve original source

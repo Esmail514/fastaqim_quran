@@ -115,7 +115,7 @@ class Mp3QuranReciter {
       Mp3QuranReciter(
         id: _integer(json['id'], 'reciter.id'),
         name: _string(json['name'], 'reciter.name'),
-        letter: json['letter'] as String?,
+        letter: _optionalString(json['letter'], 'reciter.letter'),
         moshafs: _objects(
           json['moshaf'],
           'reciter.moshaf',
@@ -170,19 +170,17 @@ class Mp3QuranApi {
   final Duration timeout;
   bool _closed = false;
 
-  Future<List<Mp3QuranRiwayah>> getRiwayat({String language = 'ar'}) async =>
-      List<Mp3QuranRiwayah>.unmodifiable(
-        (await _catalog('riwayat', 'riwayat', {
-          'language': language,
-        })).map(Mp3QuranRiwayah.fromJson),
-      );
+  Future<List<Mp3QuranRiwayah>> getRiwayat({String language = 'ar'}) =>
+      _catalog('riwayat', 'riwayat', {
+        'language': language,
+      }, Mp3QuranRiwayah.fromJson);
 
-  Future<List<Mp3QuranSurah>> getSurahs({String language = 'ar'}) async =>
-      List<Mp3QuranSurah>.unmodifiable(
-        (await _catalog('suwar', 'suwar', {
-          'language': language,
-        })).map(Mp3QuranSurah.fromJson),
-      );
+  Future<List<Mp3QuranSurah>> getSurahs({String language = 'ar'}) => _catalog(
+    'suwar',
+    'suwar',
+    {'language': language},
+    Mp3QuranSurah.fromJson,
+  );
 
   /// Filters are applied to individual recording collections as well as sent
   /// to the API, preventing a reader's other riwayat from entering the result.
@@ -206,10 +204,14 @@ class Mp3QuranApi {
       if (riwayahId != null) 'rewaya': '$riwayahId',
       if (surahNumber != null) 'sura': '$surahNumber',
     };
-    final rows = await _catalog('reciters', 'reciters', query);
+    final readers = await _catalog(
+      'reciters',
+      'reciters',
+      query,
+      Mp3QuranReciter.fromJson,
+    );
     final result = <Mp3QuranReciter>[];
-    for (final row in rows) {
-      final reciter = Mp3QuranReciter.fromJson(row);
+    for (final reciter in readers) {
       if (reciterId != null && reciter.id != reciterId) continue;
       final collections = reciter.moshafs.where(
         (collection) =>
@@ -229,10 +231,11 @@ class Mp3QuranApi {
     return List<Mp3QuranReciter>.unmodifiable(result);
   }
 
-  Future<List<Map<String, dynamic>>> _catalog(
+  Future<List<T>> _catalog<T>(
     String endpoint,
     String key,
     Map<String, String> query,
+    T Function(Map<String, dynamic>) parse,
   ) async {
     if (_closed) throw StateError('MP3Quran API is closed.');
     if (query['language']?.trim().isEmpty ?? true) {
@@ -256,8 +259,12 @@ class Mp3QuranApi {
       if (payload is! Map<String, dynamic>) {
         throw const FormatException('Expected a JSON object.');
       }
-      return _objects(payload[key], key);
+      // Materialize every model inside this boundary so malformed row fields
+      // produce the same catalog failure as malformed JSON or top-level keys.
+      return List<T>.unmodifiable(_objects(payload[key], key).map(parse));
     } on FormatException catch (error) {
+      throw Mp3QuranApiException('Invalid catalog: ${error.message}', uri: uri);
+    } on ArgumentError catch (error) {
       throw Mp3QuranApiException('Invalid catalog: ${error.message}', uri: uri);
     }
   }
@@ -329,6 +336,9 @@ String _string(Object? value, String field) {
   if (value is! String) throw FormatException('Expected string at $field.');
   return value;
 }
+
+String? _optionalString(Object? value, String field) =>
+    value == null ? null : _string(value, field);
 
 List<Map<String, dynamic>> _objects(Object? value, String field) {
   if (value is! List) throw FormatException('Expected array at $field.');

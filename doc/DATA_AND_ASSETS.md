@@ -19,7 +19,7 @@
 | `example/` | Flutter application demonstrating the public package |
 | `tool/` | Reproducible publisher-asset import and Dart-data generation scripts |
 | `quran_text.dart` | Retained root-level legacy corpus; not the public import entry point |
-| `docs/` | Package documentation |
+| `doc/` | Package documentation |
 
 ## Canonical text and glyphs are different
 
@@ -76,7 +76,7 @@ python tool/import_warsh_assets.py
 | `import_hafs_assets.py` | Downloads a pinned publisher archive; verifies its hash; writes original text/font/read-me and manifest |
 | `generate_hafs_source_data.py` | Reads bundled Hafs JSON, verifies the expected digest and end markers, writes deterministic `lib/src/data/hafs_source_data.dart` |
 | `import_warsh_assets.py` | Downloads/verifies publisher assets and all 604 source SVG/JSON files; persists all geometry, three SVGs, original text/font/notices and manifest |
-| `build_docs.py` | Runs the installed Dart documentation generator and fixes guide links in local HTML; writes only `docs/generated/` |
+| `build_docs.py` | Runs the installed Dart documentation generator and fixes guide links in local HTML; writes only `doc/generated/` |
 
 Importers fetch no audio. Network re-imports can be lengthy. Review diffs and
 run corpus/geometry tests before saving regenerated files. Do not update

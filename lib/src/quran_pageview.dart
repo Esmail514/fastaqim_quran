@@ -9,8 +9,8 @@ import 'warsh/warsh_page.dart';
 /// A horizontally swipeable Quran mushaf using internal QCF fonts.
 ///
 /// - Uses `pageData` to determine surah/verse ranges for each page.
-/// - Renders each verse with `QcfVerse`, which applies the correct per-page font.
-/// - Supports RTL page order via `reverse: true` and `Directionality.rtl`.
+/// - Renders each page with `QcfPage` using the selected narration's assets.
+/// - Supports RTL page order through `Directionality.rtl`.
 /// - Memory-efficient: only the `±windowSize` pages around the current page
 ///   are kept alive in the widget tree; all others are freed automatically.
 class PageviewQuran extends StatefulWidget {
@@ -120,7 +120,10 @@ class _PageviewQuranState extends State<PageviewQuran> {
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPageNumber;
+    _currentPage =
+        widget.controller == null
+            ? widget.initialPageNumber
+            : widget.controller!.initialPage + 1;
     if (_ownsController) {
       _internalController = PageController(
         initialPage: widget.initialPageNumber - 1,
@@ -129,10 +132,20 @@ class _PageviewQuranState extends State<PageviewQuran> {
   }
 
   @override
-  void dispose() {
-    if (_ownsController) {
+  void didUpdateWidget(PageviewQuran oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller == widget.controller) return;
+    if (widget.controller == null) {
+      _internalController = PageController(initialPage: _currentPage - 1);
+    } else {
       _internalController?.dispose();
+      _internalController = null;
     }
+  }
+
+  @override
+  void dispose() {
+    _internalController?.dispose();
     super.dispose();
   }
 

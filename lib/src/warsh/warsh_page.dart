@@ -226,6 +226,12 @@ class _WarshPageState extends State<WarshPage> {
                                 final ref = hit(details.localPosition);
                                 if (ref != null) widget.onAyahTap!(ref);
                               },
+                      onLongPressDown:
+                          !_hasLongPress
+                              ? null
+                              : (details) {
+                                _pressed = hit(details.localPosition);
+                              },
                       onLongPressStart:
                           !_hasLongPress
                               ? null

@@ -87,6 +87,7 @@ Future<void> _mount(
   ValueChanged<QuranAyahReference>? onTap,
   ValueChanged<QuranAyahReference>? onLongPress,
   ValueChanged<QuranAyahReference>? onLongPressUp,
+  ValueChanged<QuranAyahReference>? onLongPressCancel,
 }) async {
   await tester.pumpWidget(
     MaterialApp(
@@ -104,6 +105,7 @@ Future<void> _mount(
               onAyahTap: onTap,
               onAyahLongPress: onLongPress,
               onAyahLongPressUp: onLongPressUp,
+              onAyahLongPressCancel: onLongPressCancel,
             ),
           ),
         ),
@@ -114,6 +116,26 @@ Future<void> _mount(
 }
 
 void main() {
+  testWidgets(
+    'cancelled Warsh long press retains its original ayah reference',
+    (tester) async {
+      final cancelled = <QuranAyahReference>[];
+      await _mount(
+        tester,
+        mushaf: _fixture(),
+        onLongPressCancel: cancelled.add,
+      );
+      final gesture = await tester.startGesture(
+        _onScreen(tester, const Offset(-10, -20)),
+      );
+      await gesture.moveBy(const Offset(80, 0));
+      await tester.pump();
+      await gesture.up();
+      expect(cancelled, [_first]);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets('unavailable artwork does not leave invisible ayah targets', (
     tester,
   ) async {

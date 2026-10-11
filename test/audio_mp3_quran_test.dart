@@ -159,6 +159,90 @@ void main() {
     },
   );
 
+  test('malformed catalog rows retain endpoint and field context', () async {
+    const fields = {
+      'riwayat': 'riwayah.name',
+      'suwar': 'surah.id',
+      'reciters': 'reciter.letter',
+    };
+    final cases = <String, Object>{
+      'riwayat': {
+        'riwayat': [
+          {'id': 1, 'name': 42},
+        ],
+      },
+      'suwar': {
+        'suwar': [
+          {'id': 115, 'name': 'invalid'},
+        ],
+      },
+      'reciters': {
+        'reciters': [
+          {'id': 1, 'name': 'reader', 'letter': 42, 'moshaf': []},
+        ],
+      },
+    };
+    for (final entry in cases.entries) {
+      final client = MockClient((_) async => _jsonResponse(entry.value));
+      final api = Mp3QuranApi(client: client);
+      final Future<Object> request = switch (entry.key) {
+        'riwayat' => api.getRiwayat(),
+        'suwar' => api.getSurahs(),
+        _ => api.getReciters(),
+      };
+      await expectLater(
+        request,
+        throwsA(
+          isA<Mp3QuranApiException>()
+              .having(
+                (error) => error.uri?.path,
+                'endpoint',
+                '/api/v3/${entry.key}',
+              )
+              .having(
+                (error) => error.message,
+                'field',
+                contains(fields[entry.key]!),
+              ),
+        ),
+      );
+      api.close();
+      client.close();
+    }
+  });
+
+  test('malformed recording directories are catalog failures', () async {
+    final client = MockClient(
+      (_) async => _jsonResponse({
+        'reciters': [
+          {
+            'id': 1,
+            'name': 'reader',
+            'moshaf': [
+              {
+                ..._collection(id: 1, riwayah: 1, surahs: '1'),
+                'server': 'file:///tmp/audio',
+              },
+            ],
+          },
+        ],
+      }),
+    );
+    final api = Mp3QuranApi(client: client);
+    await expectLater(
+      api.getReciters(),
+      throwsA(
+        isA<Mp3QuranApiException>().having(
+          (error) => error.uri?.path,
+          'endpoint',
+          '/api/v3/reciters',
+        ),
+      ),
+    );
+    api.close();
+    client.close();
+  });
+
   test('closing an injected client leaves ownership with caller', () async {
     final client = _TrackingClient();
     final api = Mp3QuranApi(client: client);

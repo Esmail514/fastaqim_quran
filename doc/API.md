@@ -44,9 +44,15 @@ surah/verse numbers. `QcfVerse.onLongPressDown` receives
 `sp` and `h` are scale factors (default 1), not an automatic device-scaling
 service. ScreenUtil is optional and is only a dependency of the example app.
 `fontSize` changes flowing text/QCF text; it does not reflow fixed Warsh SVGs.
+For Hafs, the widget's explicit `fontSize` takes priority over `theme.fontSize`,
+then the existing responsive default. Flowing `QcfVerses` respects the host
+`MediaQuery.textScaler`.
 
 `PageviewQuran` owns its internally created controller. Dispose externally
 supplied controllers yourself. `windowSize` defaults to 5 on each side.
+An external controller's initial page takes priority on first mount; switching
+back to an internal controller preserves the current page. The package never
+disposes an externally supplied controller.
 When embedding `QcfPage` in another pager, update `currentPage` for correct
 keep-alive window behavior.
 
@@ -138,6 +144,12 @@ may search `WarshMushaf.verses`, retaining native references in each result.
 
 `WarshVerseText` is internal and is not exported by the main entry point;
 use `QcfVerse`/`QcfVerses` for flowing Warsh text.
+
+Custom `WarshVerse` values require valid surah/juz numbers and nonempty unique
+pages within 1–604. `fromData` requires each provided surah's ayah numbers to
+start at 1 and be contiguous, every referenced page to be provided, and page
+regions to match each ayah's page list. Partial custom data is not a verified
+complete Quran edition.
 
 ## Audio and errors
 

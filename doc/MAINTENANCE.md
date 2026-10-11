@@ -4,13 +4,16 @@ Display name: **Mushaf Riwayat — مصحف الروايات**. Dart package nam
 **`mushaf_riwayat`**. Imports, font package names and asset keys use this name.
 The package folder is `custom_packages/mushaf_riwayat`; its local Git history
 was preserved during the rename. See [migration](MIGRATION.md) for consumers.
-`pubspec.yaml` omits repository metadata until an actual fork URL exists;
-the README retains the original project's attribution.
+`pubspec.yaml` points to the edition's
+[GitHub repository](https://github.com/Esmail514/mushaf_riwayat), currently
+private pending asset redistribution permissions. The README retains the
+original project's attribution. See [Publishing](PUBLISHING.md).
 
 ## Independent repository
 
 The `.git/` directory in this package is a separate **local** repository
-with initial branch `main`. It has no configured remote. It stores this
+with initial branch `main`. Its `origin` is the edition's GitHub repository.
+It stores this
 package, its meaningful assets, example and documentation. Build output,
 dependency caches, local credentials, diagnostics and generated HTML are
 ignored; the files are not deleted.
@@ -25,7 +28,7 @@ the package history. A parent commit does not save the inner repository's
 git rev-parse --show-toplevel
 git status --short
 git diff
-git add README.md README.ar.md docs
+git add README.md README.ar.md doc
 git commit -m "docs: describe package behavior"
 git log --oneline
 ```
@@ -37,15 +40,15 @@ For a recoverable history backup outside this folder:
 git bundle create ../mushaf_riwayat-backup.bundle --all
 ```
 
-If you later create your own remote repository, configure its actual URL:
+The configured remote can be checked and updated normally:
 
 ```sh
-git remote add origin YOUR_REPOSITORY_URL
+git remote -v
 git push -u origin main
 ```
 
-The placeholder is not a command to execute unchanged. Do not push this
-edition to the original author's repository or overwrite existing histories.
+Do not push this edition to the original author's repository or overwrite
+existing histories. Keep this repository private until asset rights are clear.
 
 ## Verification
 
@@ -76,7 +79,7 @@ Requires Python 3.11+ and Dart on PATH. If Dart is elsewhere, use
 `python tool/build_docs.py --dart PATH_TO_DART`. The wrapper resolves README
 guide links to the original local Markdown/license files without changing them.
 
-Open `docs/generated/index.html`. Recreate it after interface changes; the
+Open `doc/generated/index.html`. Recreate it after interface changes; the
 generated directory is deliberately excluded from Git. Do not assume older
 HTML describes the latest package source.
 

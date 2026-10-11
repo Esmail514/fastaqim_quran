@@ -5,7 +5,7 @@
 .flutter-plugins-dependencies
 **/build/
 **/coverage/
-docs/generated/
+doc/generated/
 **/pubspec.lock
 
 # IDE and local platform configuration

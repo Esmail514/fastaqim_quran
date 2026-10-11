@@ -192,7 +192,8 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
     }
     // Notify the keep-alive system whenever currentPage changes so pages
     // that drift outside the window are freed without a full rebuild.
-    if (oldWidget.currentPage != widget.currentPage) {
+    if (oldWidget.currentPage != widget.currentPage ||
+        oldWidget.windowSize != widget.windowSize) {
       updateKeepAlive();
     }
   }
@@ -345,7 +346,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
         final verseText = getVerseQCF(surah, v, verseEndSymbol: false);
         final span = TextSpan(
           text:
-              v == ranges[0]['start']
+              surah == ranges[0]['surah'] && v == ranges[0]['start']
                   ? "${verseText.substring(0, 1)}\u200A${verseText.substring(1)}"
                   : verseText,
           recognizer: recognizer,
@@ -392,11 +393,13 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
               fontFamily: pageFont,
               package: 'mushaf_riwayat',
               fontSize:
-                  isPortrait
+                  widget.fontSize ??
+                  widget.theme.fontSize ??
+                  (isPortrait
                       ? baseFontSize
                       : (widget.pageNumber == 1 || widget.pageNumber == 2)
                       ? 20 * widget.sp
-                      : baseFontSize - (17 * widget.sp),
+                      : baseFontSize - (17 * widget.sp)),
               color: widget.theme.verseTextColor,
               height:
                   isPortrait

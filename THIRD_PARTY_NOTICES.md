@@ -1,5 +1,25 @@
 # Hafs and Warsh data and artwork
 
+## Legacy font redistribution review — 2026-10-11
+
+The 608 font files under `assets/fonts/` are inherited from the original
+qcf_quran package and are separate from the two canonical Unicode fonts
+documented below. Their complete provenance and redistribution permissions
+have not yet been established for this edition.
+
+Embedded `name` table notices in all 604 QCF page fonts require prior printing
+and publication permission from King Fahd Glorious Quran Printing Complex;
+183 also name DAR ALMARIFA EASY QURAN. Name ID 10 in
+`assets/fonts/qcf4/QCF4001_X-Regular.woff` credits additional font features to
+named contributors, restricts use to charitable purposes, and prohibits sale.
+The `surah-name-v2.woff` name table identifies `qul.tarteel.ai` / IcoMoon but
+contains no standalone license. These findings are not permission to
+redistribute those fonts. Obtain and record the applicable permissions before
+a public hosted release; the code's MIT license does not clear third-party
+font rights. See [Publishing](doc/PUBLISHING.md) and [Use policy](USE_POLICY.md).
+
+The following provenance applies to its specified assets only.
+
 This package preserves the downloaded Qur'anic source text, font and artwork
 without rewriting their letters, marks, glyphs or line layout. The package's
 Flutter interaction layer is separate from those files.

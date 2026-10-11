@@ -1,5 +1,22 @@
 ## Unreleased
 
+## 0.1.0
+
+Prepared first Mushaf Riwayat release; not yet published to pub.dev.
+
+- Add a bilingual use policy and maintainer support/security contacts,
+  preserving MIT and third-party permissions and documenting the limits of
+  modification restrictions.
+- Add release preparation and review documentation, and publishing exclusions
+  for generated/private files and the duplicate historical root corpus.
+- Designate the complete edition for non-commercial charitable use, preserving
+  component licenses; create its private GitHub repository pending font rights.
+- Fix controller replacement, Hafs font-size priorities and range text scaling,
+  surah heading glyphs, invalid-reference key collisions, keep-alive updates,
+  and Warsh long-press cancellation and custom-data validation.
+- Wrap malformed MP3Quran catalog fields in `Mp3QuranApiException`, keep example
+  verse ranges valid, and resolve the existing analyzer diagnostics.
+
 - Rename the local edition to Mushaf Riwayat (مصحف الروايات) with the Dart
   package name `mushaf_riwayat` and public entry `mushaf_riwayat.dart`.
 - Migrate the example, Fastaqim integration and font/asset package keys to
@@ -19,6 +36,8 @@
   with explicit errors where verified Warsh numbering conversions are required.
 - Add a two-riwayah example, source notices, and integration documentation.
 - Bundle Warsh artwork for pages 1–3; use pinned online artwork for other pages.
+
+The following versions describe the original qcf_quran release history.
 
 ## 0.0.5
 

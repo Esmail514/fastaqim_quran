@@ -66,6 +66,52 @@ Future<void> _tapWarsh(WidgetTester tester, int page) async {
 }
 
 void main() {
+  testWidgets('PageviewQuran can switch controller ownership without crashing', (
+    tester,
+  ) async {
+    final external = PageController(initialPage: 1);
+    addTearDown(external.dispose);
+    final mushaf = _mushaf();
+    Future<void> mount(PageController? controller) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: PageviewQuran(
+              key: const ValueKey('same-controller-view'),
+              controller: controller,
+              riwayah: QuranRiwayah.warsh,
+              warshMushaf: mushaf,
+              warshPagePictureBuilder: _picture,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    }
+
+    await mount(external);
+    expect(external.page, 1);
+    expect(tester.widget<QcfPage>(find.byType(QcfPage).first).currentPage, 2);
+    await mount(null);
+    final internal = tester.widget<PageView>(find.byType(PageView)).controller!;
+    expect(internal, isNot(same(external)));
+    expect(internal.page, 1);
+    internal.jumpToPage(0);
+    await tester.pumpAndSettle();
+    await mount(external);
+    expect(external.page, 0);
+    await mount(null);
+    expect(tester.widget<PageView>(find.byType(PageView)).controller!.page, 0);
+    await tester.pumpWidget(const SizedBox.shrink());
+    expect(external.hasClients, isFalse);
+    // The package may dispose its internal controller, but never the caller's.
+    void listener() {}
+    external.addListener(listener);
+    external.removeListener(listener);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets(
     'QcfPage switches riwayah and returns matching typed references',
     (tester) async {

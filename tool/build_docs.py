@@ -13,7 +13,7 @@ from urllib.parse import quote, unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "docs/generated"
+OUTPUT = ROOT / "doc/generated"
 
 
 def main() -> None:

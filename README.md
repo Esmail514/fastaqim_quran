@@ -7,11 +7,17 @@ is its display identity; its Dart package name and public entry point are
 
 This local Fastaqim edition currently supports **Hafs and Warsh**. The name
 allows future narration support; it does not claim that other narrations are
-already implemented. Version: `0.0.5`, with local additions listed under
-`Unreleased` in [CHANGELOG.md](CHANGELOG.md).
+already implemented. Prepared release: `0.1.0`; see [CHANGELOG.md](CHANGELOG.md).
+Public publication is pending the asset-rights checks in
+[Publishing](doc/PUBLISHING.md).
 
-[العربية](README.ar.md) · [Documentation](docs/README.md) ·
-[API reference](docs/API.md) · [Demo](example/README.md)
+[العربية](README.ar.md) · [Documentation](doc/README.md) ·
+[API reference](doc/API.md) · [Demo](example/README.md) ·
+[Use policy](USE_POLICY.md) · [Support](SUPPORT.md)
+
+**The complete edition with bundled assets is for non-commercial, charitable
+use only.** Component licenses remain in force. The GitHub repository is
+currently private while font redistribution permissions are being resolved.
 
 ## Included capabilities
 
@@ -27,9 +33,18 @@ already implemented. Version: `0.0.5`, with local additions listed under
 
 No audio files, player, tafsir database, bookmarks database or notification
 service are included. Flowing verse text and fixed printed page layout are
-different display modes. See [assets/data](docs/DATA_AND_ASSETS.md).
+different display modes. See [assets/data](doc/DATA_AND_ASSETS.md).
 
-## Install the local edition
+## Installation
+
+After the first hosted release is published to pub.dev:
+
+```yaml
+dependencies:
+  mushaf_riwayat: ^0.1.0
+```
+
+Until then, use the local edition below.
 
 Requires **Dart >=3.7.0 <4.0.0** and **Flutter >=3.29.0**. For a Flutter app
 located next to the `custom_packages` directory:
@@ -43,7 +58,7 @@ dependencies:
 Run `flutter pub get`. Adjust `path` if your directory layout differs. Package
 fonts/assets are registered automatically; do not copy or rename them.
 This edition has not been published to pub.dev. Use the local path dependency
-until a hosted release is available. See [migration](docs/MIGRATION.md) when
+until a hosted release is available. See [migration](doc/MIGRATION.md) when
 updating an application that used the former package name.
 
 ## Display a mushaf
@@ -83,7 +98,7 @@ final pages = warsh.getPageNumbers(2, 285);
 
 Native Hafs/Warsh ayah numbers may identify different passages. Never reuse
 Hafs tafsir or audio references for Warsh by number alone. Differences in ayah
-counts do not indicate missing Quran text. [Narration integration](docs/WARSH_INTEGRATION.md).
+counts do not indicate missing Quran text. [Narration integration](doc/WARSH_INTEGRATION.md).
 
 ## Audio URLs
 
@@ -102,7 +117,7 @@ try {
 
 Display only `availableSurahs` for the selected collection. EveryAyah also
 builds clip URLs without downloading recordings; incompatible numbering needs
-verified mapping. [Audio guide](docs/AUDIO.md).
+verified mapping. [Audio guide](doc/AUDIO.md).
 
 ## Offline use and performance
 
@@ -113,19 +128,19 @@ artwork through `warshPagePictureBuilder`. Customize the loading state with
 
 The assets occupy about **64 MiB before compression**, not an APK size estimate.
 Keep loading futures outside `build`, manage external controllers/clients,
-and profile actual target devices. [Performance guide](docs/PERFORMANCE_AND_TROUBLESHOOTING.md).
+and profile actual target devices. [Performance guide](doc/PERFORMANCE_AND_TROUBLESHOOTING.md).
 
 ## Develop
 
 ```sh
 flutter pub get
-flutter analyze --no-preamble --no-fatal-infos
+flutter analyze --no-preamble
 flutter test
 ```
 
 Run the demo from `example/` using `flutter run`.
-[Contributing](CONTRIBUTING.md) · [Verification](docs/VALIDATION.md) ·
-[Git, generated API docs and release preparation](docs/MAINTENANCE.md).
+[Contributing](CONTRIBUTING.md) · [Verification](doc/VALIDATION.md) ·
+[Git, generated API docs and release preparation](doc/MAINTENANCE.md).
 
 ## Origins and rights
 
@@ -137,6 +152,26 @@ The original README also carried this notice, retained here:
 
 > This package and its bundled fonts are NOT for commercial use.
 
-The existing code license and asset notices remain unchanged. Source hashes
-and structural tests do not constitute an independent scholarly review of
-all Quran letters, page artwork or audible clip boundaries.
+This historical notice does not override MIT rights for code or CC BY 4.0
+rights for material covered by that license. The provenance and usage terms
+of all legacy QCF fonts still need confirmation before a public release;
+this edition does not guarantee commercial clearance for all bundled assets.
+The original licenses and asset notices are preserved. Source hashes and
+structural tests do not constitute an independent scholarly review of all
+Quran letters, page artwork or audible clip boundaries.
+
+## Policy and contact
+
+The package is available to everyone under its component licenses. Preserve
+Quran source integrity and attribution; do not tamper with an official release,
+impersonate its maintainer or present a modified fork as official. MIT and
+CC BY permissions remain in force; [USE_POLICY.md](USE_POLICY.md) explains
+the limits of a no-modification policy and welcomes honest criticism.
+
+Maintainer: **Esmail Al-Sayaghi**, Fastaqim.
+Phone: [+967771209666](tel:+967771209666).
+Email: [asasesmail514@gmail.com](mailto:asasesmail514@gmail.com) or
+[support.fastaqim@gmail.com](mailto:support.fastaqim@gmail.com).
+Instagram: [@esmail_sayaghi](https://www.instagram.com/esmail_sayaghi/).
+See [SUPPORT.md](SUPPORT.md) for reporting details and
+[SECURITY.md](SECURITY.md) for sensitive security reports.

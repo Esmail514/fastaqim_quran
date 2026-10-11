@@ -3,6 +3,12 @@
 The public package name is `mushaf_riwayat`. Work from this package root;
 the nested local repository is separate from the surrounding app history.
 
+Read [USE_POLICY.md](USE_POLICY.md) and [SUPPORT.md](SUPPORT.md). Bug reports,
+security disclosures and respectful criticism are welcome. Contributions must
+not corrupt Quran source assets or imply maintainer endorsement of a fork.
+Code changes remain governed by the applicable licenses; this policy does not
+prohibit modifications permitted by MIT or CC BY 4.0.
+
 ## Make a focused change
 
 1. Inspect the exported interface, related implementation and tests.
@@ -30,6 +36,6 @@ Preserve `LICENSE` and `THIRD_PARTY_NOTICES.md`. New dependencies or caches
 need a concrete reason; existing functionality should not be rewritten during
 documentation work. Do not stage generated build output or credentials.
 
-Read [maintenance](docs/MAINTENANCE.md), [API](docs/API.md),
-[data/assets](docs/DATA_AND_ASSETS.md), and [verification](docs/VALIDATION.md)
+Read [maintenance](doc/MAINTENANCE.md), [API](doc/API.md),
+[data/assets](doc/DATA_AND_ASSETS.md), and [verification](doc/VALIDATION.md)
 before changing their corresponding parts.

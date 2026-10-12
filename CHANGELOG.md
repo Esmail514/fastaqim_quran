@@ -2,7 +2,7 @@
 
 ## 0.1.0
 
-Prepared first Mushaf Riwayat release; not yet published to pub.dev.
+First Mushaf Riwayat release.
 
 - Add a bilingual use policy and maintainer support/security contacts,
   preserving MIT and third-party permissions and documenting the limits of
@@ -10,7 +10,8 @@ Prepared first Mushaf Riwayat release; not yet published to pub.dev.
 - Add release preparation and review documentation, and publishing exclusions
   for generated/private files and the duplicate historical root corpus.
 - Designate the complete edition for non-commercial charitable use, preserving
-  component licenses; create its private GitHub repository pending font rights.
+  component licenses and recording the maintainer's reported upstream approval
+  to rebuild, modify and republish the package.
 - Fix controller replacement, Hafs font-size priorities and range text scaling,
   surah heading glyphs, invalid-reference key collisions, keep-alive updates,
   and Warsh long-press cancellation and custom-data validation.

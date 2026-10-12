@@ -1,5 +1,15 @@
 # Hafs and Warsh data and artwork
 
+## Reported upstream permission — 2026-10-11
+
+The maintainer reports obtaining the upstream repository owner's approval to
+rebuild, modify and republish the package, and requested proceeding with this
+edition. The reported approval and its provenance are recorded in
+[Upstream permission](doc/UPSTREAM_PERMISSION.md). This is not represented as
+a new license from KFGQPC, Dar Al-Marifa or the font contributors. Their
+embedded notices and component terms remain intact. The review below records
+the available evidence and its limitations.
+
 ## Legacy font redistribution review — 2026-10-11
 
 The 608 font files under `assets/fonts/` are inherited from the original

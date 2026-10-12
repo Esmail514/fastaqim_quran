@@ -154,8 +154,10 @@ The original README also carried this notice, retained here:
 
 This historical notice does not override MIT rights for code or CC BY 4.0
 rights for material covered by that license. The provenance and usage terms
-of all legacy QCF fonts still need confirmation before a public release;
-this edition does not guarantee commercial clearance for all bundled assets.
+of legacy QCF fonts are documented in the source notices. The maintainer
+reports [upstream approval](doc/UPSTREAM_PERMISSION.md) to rebuild, modify
+and republish the package; embedded font terms remain intact. This edition
+does not grant commercial permission for third-party bundled assets.
 The original licenses and asset notices are preserved. Source hashes and
 structural tests do not constitute an independent scholarly review of all
 Quran letters, page artwork or audible clip boundaries.

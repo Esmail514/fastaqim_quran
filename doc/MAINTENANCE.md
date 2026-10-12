@@ -6,7 +6,8 @@ The package folder is `custom_packages/mushaf_riwayat`; its local Git history
 was preserved during the rename. See [migration](MIGRATION.md) for consumers.
 `pubspec.yaml` points to the edition's
 [GitHub repository](https://github.com/Esmail514/mushaf_riwayat), currently
-private pending asset redistribution permissions. The README retains the
+prepared for public publication at the maintainer's request, with the reported
+[upstream permission](UPSTREAM_PERMISSION.md) documented. The README retains the
 original project's attribution. See [Publishing](PUBLISHING.md).
 
 ## Independent repository
@@ -48,7 +49,7 @@ git push -u origin main
 ```
 
 Do not push this edition to the original author's repository or overwrite
-existing histories. Keep this repository private until asset rights are clear.
+existing histories. Preserve upstream attribution and component license notices.
 
 ## Verification
 

@@ -27,7 +27,9 @@
 المشمولة بها. خطوط صفحات QCF القديمة تحمل شرط إذن مسبق للنشر، ويحمل أحد
 إشعاراتها قيد الاستخدام الخيري فقط. لم تُوثق أذونات جميع الخطوط؛ لذلك لا تقدم هذه
 النسخة ضمانًا بصلاحية جميع الأصول للاستعمال التجاري أو إعادة التوزيع.
-توضيح تلك الحقوق شرط جاهزية الإصدار العام، كما يوضح [دليل النشر](doc/PUBLISHING.md).
+أفاد المسؤول بحصوله على [موافقة صاحب الباكج الأصلي](doc/UPSTREAM_PERMISSION.md)
+وطلب النشر؛ تبقى حقوق أصحاب الأصول وإشعاراتهم محفوظة كما يوضح
+[دليل النشر](doc/PUBLISHING.md).
 
 ## سلامة النسخة الرسمية
 
@@ -95,7 +97,9 @@ all legacy QCF fonts remain unresolved. All 604 page fonts carry a prior
 publication permission requirement; one inspected notice also restricts use
 to charitable purposes. This edition does not guarantee that
 every bundled asset is cleared for commercial use or redistribution; resolving
-these rights is a public-release prerequisite in [Publishing](doc/PUBLISHING.md).
+these rights remains documented in [Publishing](doc/PUBLISHING.md). The maintainer
+reports [upstream approval](doc/UPSTREAM_PERMISSION.md) and requested publication;
+the assets' own notices and rights remain preserved.
 
 - Keep Quran text, fonts, artwork and numbering intact in anything presented
   as an official release. Report suspected errors with an authoritative source;

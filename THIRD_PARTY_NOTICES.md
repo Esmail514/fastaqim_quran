@@ -44,6 +44,17 @@ published terms may resolve this without separate correspondence.
 
 The following provenance applies to its specified assets only.
 
+The deeper comparison in [Font-rights evidence](doc/FONT_RIGHTS_EVIDENCE.md)
+found explicit free `Use, Copy, Distribute` grants in name ID 13 of the exact
+canonical Hafs and Warsh Unicode fonts below. Their full embedded EULAs are
+also preserved as readable text in
+[Hafs EULA](doc/licenses/KFGQPC_HAFS_FONT_EULA.txt) and
+[Warsh EULA](doc/licenses/KFGQPC_WARSH_FONT_EULA.txt). These grants do not cover
+different fonts merely because they share the publisher's name.
+All 608 inherited fonts matched upstream Git blobs; the current QUL page-one
+tajweed downloads also retain the prior-permission notice. No general grant
+covering the inherited QCF4 edition's redistribution has been established.
+
 This package preserves the downloaded Qur'anic source text, font and artwork
 without rewriting their letters, marks, glyphs or line layout. The package's
 Flutter interaction layer is separate from those files.

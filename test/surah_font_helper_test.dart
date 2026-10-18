@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 
 void main() {
   test('surah names use the actual bundled Unicode font mapping', () {
@@ -14,7 +14,7 @@ void main() {
     final formatted = SurahFontHelper.formatSurahText('surah033 surah102');
     final spans = formatted.children!.whereType<TextSpan>().toList();
     expect(spans.map((span) => span.text), ['\ue021', ' ', '\ue102']);
-    expect(spans.first.style?.fontFamily, 'packages/mushaf_riwayat/surahname');
+    expect(spans.first.style?.fontFamily, 'packages/fastaqim_quran/surahname');
   });
 
   testWidgets('headers render the names of surahs 33 and 102 as font glyphs', (

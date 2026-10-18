@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 
 /// Example page demonstrating the QcfVerses widget
 class QcfVersesExamplePage extends StatefulWidget {
@@ -196,7 +196,7 @@ class _QcfVersesExamplePageState extends State<QcfVersesExamplePage> {
                           fontSize: 40,
                           color: Colors.blue,
                         ),
-                        package: 'mushaf_riwayat',
+                        package: 'fastaqim_quran',
                       ),
                     ),
                   ],

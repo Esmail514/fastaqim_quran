@@ -1,4 +1,14 @@
-# Published release — Mushaf Riwayat 0.1.0
+# Publication records
+
+## Fastaqim Quran 0.1.0 — release preparation
+
+The package is being renamed to `fastaqim_quran`. The source repository is
+[planned here](https://github.com/Esmail514/fastaqim_quran). This section records
+preparation only; the archive hash, source commit and hosted verification for
+the new name must be recorded after a successful upload. The evidence below
+belongs exclusively to the former package name.
+
+## Historical published release — mushaf_riwayat 0.1.0
 
 - Package: [mushaf_riwayat 0.1.0](https://pub.dev/packages/mushaf_riwayat/versions/0.1.0).
 - Repository: [Esmail514/mushaf_riwayat](https://github.com/Esmail514/mushaf_riwayat), public.
@@ -11,7 +21,7 @@
 - The CLI confirmed successful upload; the package API and HTML page returned
   HTTP 200 with version `0.1.0`.
 
-## Install
+### Historical installation
 
 ```yaml
 dependencies:
@@ -27,7 +37,7 @@ and source checks are recorded in [Validation](VALIDATION.md) and
 [Release review](RELEASE_REVIEW.md). The public release preserves component
 license notices and the [reported upstream permission](UPSTREAM_PERMISSION.md).
 
-## Verification after publication
+### Verification after the former publication
 
 A separate Flutter project installed exact version `0.1.0` from `https://pub.dev`,
 with no local path override. Its lock file recorded `source: hosted` and the

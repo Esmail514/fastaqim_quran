@@ -141,7 +141,7 @@ class WarshPageData {
 class WarshMushaf {
   static Future<WarshMushaf>? _defaultLoad;
   static const _manifestAsset =
-      'packages/mushaf_riwayat/assets/warsh/manifest.json';
+      'packages/fastaqim_quran/assets/warsh/manifest.json';
 
   final String editionId;
   final String fontFamily;
@@ -247,7 +247,7 @@ class WarshMushaf {
     final text =
         jsonDecode(
               await bundle.loadString(
-                'packages/mushaf_riwayat/${manifest['textAsset']}',
+                'packages/fastaqim_quran/${manifest['textAsset']}',
               ),
             )
             as List<dynamic>;
@@ -324,7 +324,7 @@ class WarshMushaf {
     final raw =
         jsonDecode(
               await _bundle!.loadString(
-                'packages/mushaf_riwayat/${descriptor['geometryAsset']}',
+                'packages/fastaqim_quran/${descriptor['geometryAsset']}',
               ),
             )
             as List<dynamic>;

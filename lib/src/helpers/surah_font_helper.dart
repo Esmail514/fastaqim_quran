@@ -20,7 +20,7 @@ class SurahFontHelper {
   static TextSpan formatSurahText(
     String text, {
     TextStyle? style,
-    String? package = 'mushaf_riwayat',
+    String? package = 'fastaqim_quran',
   }) {
     final RegExp regExp = RegExp(r'surah(\d{3})');
     final List<InlineSpan> children = [];

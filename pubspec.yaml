@@ -1,9 +1,9 @@
-name: mushaf_riwayat
+name: fastaqim_quran
 description: "Hafs and Warsh Quran rendering with clickable ayahs, fixed mushaf pages, bundled Quran data, and online MP3Quran/EveryAyah audio URL providers."
 version: 0.1.0
-homepage: https://github.com/Esmail514/mushaf_riwayat
-repository: https://github.com/Esmail514/mushaf_riwayat
-issue_tracker: https://github.com/Esmail514/mushaf_riwayat/issues
+homepage: https://github.com/Esmail514/fastaqim_quran
+repository: https://github.com/Esmail514/fastaqim_quran
+issue_tracker: https://github.com/Esmail514/fastaqim_quran/issues
 topics:
   - flutter
   - quran

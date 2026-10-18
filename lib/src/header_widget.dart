@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'qcf_theme_data.dart';
-import 'data/mushaf_riwayat.dart';
+import 'data/fastaqim_quran.dart';
 import 'helpers/surah_font_helper.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -34,7 +34,7 @@ class HeaderWidget extends StatelessWidget {
             Image(
               image: const AssetImage(
                 "assets/mainframe.png",
-                package: 'mushaf_riwayat',
+                package: 'fastaqim_quran',
               ),
               width:
                   isPortrait
@@ -49,7 +49,7 @@ class HeaderWidget extends StatelessWidget {
                 text: SurahFontHelper.getSurahGlyph(suraNumber),
                 style: TextStyle(
                   fontFamily: SurahFontHelper.fontFamily,
-                  package: 'mushaf_riwayat',
+                  package: 'fastaqim_quran',
                   fontSize:
                       isPortrait
                           ? getScreenType(context) == ScreenType.large

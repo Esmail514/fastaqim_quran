@@ -1,6 +1,27 @@
-## Unreleased
+## 0.1.0 — Fastaqim Quran
 
-## 0.1.0
+- Rename the package from `mushaf_riwayat` to `fastaqim_quran`, the public entry
+  point to `fastaqim_quran.dart`, and the local folder to
+  `custom_packages/fastaqim_quran`.
+- Update application/example imports, font and asset package keys, repository
+  metadata and bilingual migration guides. Preserve public APIs, original
+  authorship, component licenses and Quran source assets.
+
+- Reuse the supplied Warsh loading placeholder while self-recitation markers
+  load, keeping the host app's shimmer consistent with page loading.
+- Add opt-in `fitPageHeight` to Hafs page renderers: use bounded line spacing
+  and balanced margins on tall portrait viewports while retaining Quran glyph
+  sizes, text, line breaks, and ayah interaction. Keep short pages, landscape,
+  overflowing text, and Warsh artwork at their original layout.
+- Add optional `isVerseHidden` to page renderers for self-recitation: preserve
+  Hafs glyph layout and visible ayah markers, and mask Warsh ayahs using their
+  original regions while retaining their original number/ornament artwork
+  without region outlines.
+- Keep hidden text out of Hafs semantics and preserve tap/long-press callbacks
+  and whole-ayah identity across Warsh page continuations.
+
+
+## 0.1.0 — mushaf_riwayat (published 2026-10-12)
 
 First Mushaf Riwayat release.
 

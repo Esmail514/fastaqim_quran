@@ -1,23 +1,23 @@
-# Mushaf Riwayat — مصحف الروايات
+# Fastaqim Quran — قرآن فاستقم
 
 A Flutter Quran package for fixed mushaf pages, readable publisher text,
-narration-aware ayah interaction, and audio URL providers. **Mushaf Riwayat**
+narration-aware ayah interaction, and audio URL providers. **Fastaqim Quran**
 is its display identity; its Dart package name and public entry point are
-**`mushaf_riwayat`** and **`lib/mushaf_riwayat.dart`**.
+**`fastaqim_quran`** and **`lib/fastaqim_quran.dart`**.
 
-This local Fastaqim edition currently supports **Hafs and Warsh**. The name
-allows future narration support; it does not claim that other narrations are
-already implemented. Prepared release: `0.1.0`; see [CHANGELOG.md](CHANGELOG.md).
-Public publication is pending the asset-rights checks in
-[Publishing](doc/PUBLISHING.md).
+This edition currently supports **Hafs and Warsh**. Other narrations are not
+implemented. Release `0.1.0` introduces `fastaqim_quran`, replacing the former
+`mushaf_riwayat` identity. See [migration](doc/MIGRATION.md),
+[CHANGELOG.md](CHANGELOG.md) and the
+[historical release record](doc/PUBLISHED_RELEASE.md).
 
 [العربية](README.ar.md) · [Documentation](doc/README.md) ·
 [API reference](doc/API.md) · [Demo](example/README.md) ·
 [Use policy](USE_POLICY.md) · [Support](SUPPORT.md)
 
 **The complete edition with bundled assets is for non-commercial, charitable
-use only.** Component licenses remain in force. The GitHub repository is
-currently private while font redistribution permissions are being resolved.
+use only.** Component licenses remain in force. Source repository:
+[Esmail514/fastaqim_quran](https://github.com/Esmail514/fastaqim_quran).
 
 ## Included capabilities
 
@@ -37,35 +37,35 @@ different display modes. See [assets/data](doc/DATA_AND_ASSETS.md).
 
 ## Installation
 
-After the first hosted release is published to pub.dev:
+For the hosted release under the new name:
 
 ```yaml
 dependencies:
-  mushaf_riwayat: ^0.1.0
+  fastaqim_quran: ^0.1.0
 ```
 
-Until then, use the local edition below.
+Publishing instructions and hosted verification are tracked in
+[Publishing](doc/PUBLISHING.md). The local edition can also be used below.
 
 Requires **Dart >=3.7.0 <4.0.0** and **Flutter >=3.29.0**. For a Flutter app
 located next to the `custom_packages` directory:
 
 ```yaml
 dependencies:
-  mushaf_riwayat:
-    path: ../custom_packages/mushaf_riwayat
+  fastaqim_quran:
+    path: ../custom_packages/fastaqim_quran
 ```
 
 Run `flutter pub get`. Adjust `path` if your directory layout differs. Package
 fonts/assets are registered automatically; do not copy or rename them.
-This edition has not been published to pub.dev. Use the local path dependency
-until a hosted release is available. See [migration](doc/MIGRATION.md) when
-updating an application that used the former package name.
+See [migration](doc/MIGRATION.md) when updating an application that used
+`mushaf_riwayat`; imports and direct font/asset package keys must be updated.
 
 ## Display a mushaf
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 
 class MushafScreen extends StatelessWidget {
   const MushafScreen({super.key});
@@ -171,7 +171,8 @@ CC BY permissions remain in force; [USE_POLICY.md](USE_POLICY.md) explains
 the limits of a no-modification policy and welcomes honest criticism.
 
 Maintainer: **Esmail Al-Sayaghi**, Fastaqim.
-Phone: [+967771209666](tel:+967771209666).
+GitHub: [@Esmail514](https://github.com/Esmail514).
+Phone: +967771209666.
 Email: [asasesmail514@gmail.com](mailto:asasesmail514@gmail.com) or
 [support.fastaqim@gmail.com](mailto:support.fastaqim@gmail.com).
 Instagram: [@esmail_sayaghi](https://www.instagram.com/esmail_sayaghi/).

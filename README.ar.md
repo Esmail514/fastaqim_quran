@@ -1,21 +1,22 @@
-# مصحف الروايات — Mushaf Riwayat
+# قرآن فاستقم — Fastaqim Quran
 
 باكج Flutter لعرض المصحف والنص الأصلي والتفاعل مع الآيات وتوفير روابط
-التلاوات. اسم الهوية هو **مصحف الروايات**، واسم الباكج التقني **`mushaf_riwayat`**،
-ونقطة الاستيراد العامة **`lib/mushaf_riwayat.dart`**.
+التلاوات. اسم الهوية هو **قرآن فاستقم**، واسم الباكج التقني **`fastaqim_quran`**،
+ونقطة الاستيراد العامة **`lib/fastaqim_quran.dart`**.
 
-يدعم الباكج حاليًا **حفص وورش**. الاسم مناسب للتوسع إلى روايات أخرى؛ لا يعني
-أنها مدعومة بالفعل. الإصدار المجهز هو `0.1.0`؛ تفاصيله في
-[سجل التغييرات](CHANGELOG.md). النشر العام ينتظر حسم حقوق الأصول وفق
-[دليل النشر](doc/PUBLISHING.md).
+يدعم الباكج حاليًا **حفص وورش** فقط. يقدم الإصدار `0.1.0` الاسم
+`fastaqim_quran` بدل الهوية السابقة `mushaf_riwayat`؛ راجع
+[دليل الانتقال](doc/MIGRATION.md) و[سجل التغييرات](CHANGELOG.md).
+بيانات الإصدار المنشور بالاسم السابق محفوظة في
+[سجل النشر التاريخي](doc/PUBLISHED_RELEASE.md).
 
 [English](README.md) · [فهرس التوثيق](doc/README.md) ·
 [مرجع الواجهات](doc/API.md) · [المثال](example/README.md) ·
 [سياسة الاستخدام](USE_POLICY.md) · [الدعم](SUPPORT.md)
 
 **النسخة الكاملة بأصولها مخصصة للاستخدام غير التجاري والخيري فقط.** تبقى
-تراخيص المكونات الأصلية سارية. مستودع GitHub خاص حاليًا إلى حين توثيق
-أذونات إعادة توزيع الخطوط.
+تراخيص المكونات الأصلية سارية. مستودع المصدر:
+[Esmail514/fastaqim_quran](https://github.com/Esmail514/fastaqim_quran).
 
 ## المزايا الحالية
 
@@ -33,34 +34,35 @@
 
 ## الإضافة إلى التطبيق
 
-بعد نشر الإصدار الأول على pub.dev، تكون الإضافة:
+لإضافة الإصدار المستضاف بالاسم الجديد:
 
 ```yaml
 dependencies:
-  mushaf_riwayat: ^0.1.0
+  fastaqim_quran: ^0.1.0
 ```
 
-حتى ذلك الوقت، استخدم المسار المحلي التالي.
+تعليمات النشر والتحقق من النسخة المستضافة موثقان في [دليل النشر](doc/PUBLISHING.md).
+يمكن أيضًا استخدام المسار المحلي التالي.
 
 المتطلبات: **Dart 3.7 فأحدث ضمن 3.x** و**Flutter 3.29 فأحدث**. إذا كان
 مجلد التطبيق بجانب `custom_packages`:
 
 ```yaml
 dependencies:
-  mushaf_riwayat:
-    path: ../custom_packages/mushaf_riwayat
+  fastaqim_quran:
+    path: ../custom_packages/fastaqim_quran
 ```
 
 نفّذ `flutter pub get`. غيّر المسار إن اختلف ترتيب مجلداتك. الخطوط والأصول
 مضافة داخل الباكج ولا تحتاج إلى نسخها أو تسجيلها مرة أخرى في التطبيق.
-هذه النسخة لم تُنشر على pub.dev بعد؛ استخدم المسار المحلي حتى إصدارها.
-راجع [دليل الانتقال](doc/MIGRATION.md) عند تحديث تطبيق يستخدم الاسم السابق.
+راجع [دليل الانتقال](doc/MIGRATION.md) عند تحديث تطبيق يستخدم
+`mushaf_riwayat`؛ يجب تحديث الاستيرادات ومفاتيح الخطوط والأصول المباشرة.
 
 ## عرض المصحف
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 
 PageviewQuran(
   riwayah: QuranRiwayah.warsh,
@@ -144,7 +146,8 @@ flutter test
 [السياسة](USE_POLICY.md) هذه الحدود وتسمح بالإبلاغ الصادق والنقد المحترم.
 
 المسؤول: **إسماعيل الصياغي** — فاستقم.
-الهاتف: [+967771209666](tel:+967771209666).
+GitHub: [@Esmail514](https://github.com/Esmail514).
+الهاتف: +967771209666.
 البريد: [asasesmail514@gmail.com](mailto:asasesmail514@gmail.com) أو
 [support.fastaqim@gmail.com](mailto:support.fastaqim@gmail.com).
 إنستقرام: [@esmail_sayaghi](https://www.instagram.com/esmail_sayaghi/).

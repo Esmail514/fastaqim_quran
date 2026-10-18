@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 
 class _LocalWarshBundle extends CachingAssetBundle {
   @override
   Future<ByteData> load(String key) async {
     final bytes =
         await File(
-          key.replaceFirst('packages/mushaf_riwayat/', ''),
+          key.replaceFirst('packages/fastaqim_quran/', ''),
         ).readAsBytes();
     return ByteData.sublistView(bytes);
   }
@@ -84,7 +84,7 @@ void main() {
     expect(paragraph.text.toPlainText(), isNot(contains(getVerse(1, 1))));
     expect(
       paragraph.text.style!.fontFamily,
-      'packages/mushaf_riwayat/QCF_Warsh',
+      'packages/fastaqim_quran/QCF_Warsh',
     );
     expect(tester.takeException(), isNull);
   });

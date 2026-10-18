@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Example demonstrating the QcfVerses widget usage

@@ -201,7 +201,7 @@ class _WarshVerseTextState extends State<WarshVerseText> {
             children: spans,
             style: TextStyle(
               fontFamily: mushaf.fontFamily,
-              package: 'mushaf_riwayat',
+              package: 'fastaqim_quran',
               fontSize: widget.fontSize,
               color: widget.theme.verseTextColor,
               height: widget.theme.verseHeight,

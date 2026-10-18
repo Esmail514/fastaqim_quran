@@ -1,7 +1,7 @@
 # Public API reference
 
 ```dart
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 ```
 
 Use this entry point instead of internal `lib/src/` imports. Generated HTML
@@ -13,6 +13,12 @@ members; this guide explains the contracts that matter to a host app.
 `QuranRiwayah` has `hafs` and `warsh`. `QuranAyahReference` stores `riwayah`,
 `surahNumber` and `verseNumber`; equality, hashing and `key` include narration.
 For example, `hafs:2:255` is a different reference from `warsh:2:255`.
+
+`QuranWordReference` adds a **1-based** `wordPosition`, for example
+`hafs:2:2:4`. Its `ayahReference` retains the narration and native ayah number.
+The position identifies a word in the host's verified word dataset, not a QCF
+code point or a space-delimited text token. The reference does not add word hit
+targets to the printed page. See [Word references](WORD_REFERENCES.md).
 
 Page/surah/verse numbers are **1-based**. `PageController.jumpToPage` uses a
 **0-based** index. Top-level legacy helpers always use Hafs; selecting Warsh
@@ -92,7 +98,7 @@ clear nullable fields. Prefer `theme` over legacy widget color properties.
 | `HafsText.getSourceVerse(surah, verse)` | Original publisher text including its end-marker glyph |
 | `HafsText.getVerse(surah, verse)` | Display slice without the source end marker |
 | `HafsText.getSearchVerse(surah, verse)` | Publisher-provided search text |
-| `HafsText.fontFamily` | `QCF_HafsUnicode`; use `package: 'mushaf_riwayat'` in `TextStyle` |
+| `HafsText.fontFamily` | `QCF_HafsUnicode`; use `package: 'fastaqim_quran'` in `TextStyle` |
 | `quranText` / `activeQuranText` | Read-only Hafs corpus |
 | `invalidateVerseIndex()` | Resets the legacy derived lookup index; normally unnecessary |
 

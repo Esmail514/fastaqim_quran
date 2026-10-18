@@ -6,7 +6,7 @@ export 'src/warsh/warsh_page.dart';
 export 'src/audio/quran_audio.dart';
 
 // Data & Helpers
-export 'src/data/mushaf_riwayat.dart';
+export 'src/data/fastaqim_quran.dart';
 export 'src/data/page_font_size.dart';
 export 'src/helpers/convert_to_arabic_number.dart';
 export 'src/helpers/surah_font_helper.dart';

@@ -1,4 +1,4 @@
-/// mushaf_riwayat — High-fidelity Quran Mushaf rendering using bundled QCF fonts.
+/// fastaqim_quran — High-fidelity Quran Mushaf rendering using bundled QCF fonts.
 ///
 /// This package exposes:
 ///

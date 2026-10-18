@@ -1,6 +1,6 @@
-# Contributing to Mushaf Riwayat
+# Contributing to Fastaqim Quran
 
-The public package name is `mushaf_riwayat`. Work from this package root;
+The public package name is `fastaqim_quran`. Work from this package root;
 the nested local repository is separate from the surrounding app history.
 
 Read [USE_POLICY.md](USE_POLICY.md) and [SUPPORT.md](SUPPORT.md). Bug reports,

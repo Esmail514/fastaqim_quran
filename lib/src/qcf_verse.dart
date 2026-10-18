@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'qcf_theme_data.dart';
-import 'data/mushaf_riwayat.dart';
+import 'data/fastaqim_quran.dart';
 import 'riwayah.dart';
 import 'warsh/warsh_mushaf.dart';
 import 'warsh/warsh_verse_text.dart';
@@ -195,7 +195,7 @@ class _QcfVerseState extends State<QcfVerse> {
             recognizer: _recognizer,
             style: TextStyle(
               fontFamily: fontFamily,
-              package: 'mushaf_riwayat',
+              package: 'fastaqim_quran',
               color: effectiveTheme.verseNumberColor,
               height: effectiveTheme.verseNumberHeight / widget.h,
               fontSize: effectiveFontSize,
@@ -209,7 +209,7 @@ class _QcfVerseState extends State<QcfVerse> {
           color: verseTextColor,
           height: effectiveTheme.verseHeight / widget.h,
           letterSpacing: effectiveTheme.letterSpacing,
-          package: 'mushaf_riwayat',
+          package: 'fastaqim_quran',
           wordSpacing: effectiveTheme.wordSpacing,
           fontFamily: fontFamily,
           fontSize: effectiveFontSize,

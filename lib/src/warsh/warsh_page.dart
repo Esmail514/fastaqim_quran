@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../qcf_theme_data.dart';
 import '../riwayah.dart';
+import 'warsh_marker_svg.dart';
 import 'warsh_mushaf.dart';
 
 typedef WarshPagePictureBuilder =
@@ -17,7 +20,8 @@ class WarshPage extends StatefulWidget {
   final QcfThemeData theme;
   final WarshPagePictureBuilder? pictureBuilder;
 
-  /// Optional placeholder while page geometry and SVG artwork are loading.
+  /// Optional placeholder while page geometry, SVG artwork or hidden-ayah
+  /// marker artwork is loading.
   final WidgetBuilder? loadingBuilder;
   final ValueChanged<QuranAyahReference>? onAyahTap;
   final ValueChanged<QuranAyahReference>? onAyahLongPress;
@@ -26,6 +30,10 @@ class WarshPage extends StatefulWidget {
   final void Function(QuranAyahReference, LongPressStartDetails)?
   onAyahLongPressStart;
   final Color? Function(int, int)? verseBackgroundColor;
+
+  /// Mask the original ayah polygons while keeping their hit targets and the
+  /// artwork's original ayah markers, without drawing region outlines.
+  final bool Function(int surahNumber, int verseNumber)? isVerseHidden;
 
   const WarshPage({
     super.key,
@@ -40,6 +48,7 @@ class WarshPage extends StatefulWidget {
     this.onAyahLongPressCancel,
     this.onAyahLongPressStart,
     this.verseBackgroundColor,
+    this.isVerseHidden,
   });
 
   @override
@@ -49,6 +58,8 @@ class WarshPage extends StatefulWidget {
 class _WarshPageState extends State<WarshPage> {
   late Future<_LoadedWarshPage?> _page;
   PictureInfo? _pictureInfo;
+  Future<PictureInfo?>? _markers;
+  PictureInfo? _markerPictureInfo;
   int _loadGeneration = 0;
   QuranAyahReference? _pressed;
 
@@ -67,6 +78,7 @@ class _WarshPageState extends State<WarshPage> {
   void _load() {
     _pressed = null;
     _releasePicture();
+    _markers = null;
     final generation = ++_loadGeneration;
     final mushaf = widget.mushaf;
     final pageNumber = widget.pageNumber;
@@ -80,7 +92,7 @@ class _WarshPageState extends State<WarshPage> {
         if (page.svgAsset != null) {
           loader = SvgAssetLoader(
             page.svgAsset!,
-            packageName: 'mushaf_riwayat',
+            packageName: 'fastaqim_quran',
           );
         } else if (page.svgUri != null) {
           loader = SvgNetworkLoader(page.svgUri.toString());
@@ -100,16 +112,50 @@ class _WarshPageState extends State<WarshPage> {
         return null;
       }
     }();
+    if (widget.isVerseHidden != null && !customPicture) _loadMarkers();
+  }
+
+  void _loadMarkers() {
+    final generation = _loadGeneration;
+    _markers = () async {
+      try {
+        final loaded = await _page;
+        if (loaded == null || !mounted || generation != _loadGeneration) {
+          return null;
+        }
+        final page = loaded.page;
+        final SvgLoader loader;
+        if (page.svgAsset != null) {
+          loader = _WarshMarkerAssetLoader(page.svgAsset!);
+        } else if (page.svgUri != null) {
+          loader = _WarshMarkerNetworkLoader(page.svgUri.toString());
+        } else {
+          return null;
+        }
+        final picture = await vg.loadPicture(loader, null);
+        if (!mounted || generation != _loadGeneration) {
+          picture.picture.dispose();
+          return null;
+        }
+        _markerPictureInfo = picture;
+        return picture;
+      } catch (_) {
+        return null;
+      }
+    }();
   }
 
   void _releasePicture() {
-    final previous = _pictureInfo;
+    final previous = [_pictureInfo, _markerPictureInfo].nonNulls.toList();
     _pictureInfo = null;
-    if (previous != null) {
+    _markerPictureInfo = null;
+    if (previous.isNotEmpty) {
       // A previous painter may still belong to the frame being replaced.
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => previous.picture.dispose(),
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        for (final picture in previous) {
+          picture.picture.dispose();
+        }
+      });
     }
   }
 
@@ -127,6 +173,11 @@ class _WarshPageState extends State<WarshPage> {
         oldWidget.mushaf != widget.mushaf ||
         oldWidget.pictureBuilder != widget.pictureBuilder) {
       _load();
+    } else if (widget.isVerseHidden != null &&
+        widget.pictureBuilder == null &&
+        _markers == null) {
+      // Starting tasmi loads only the marker layer; keep the displayed page.
+      _loadMarkers();
     }
   }
 
@@ -276,6 +327,70 @@ class _WarshPageState extends State<WarshPage> {
                             ),
                           ),
                           _picture(context, loaded),
+                          if (widget.isVerseHidden != null)
+                            IgnorePointer(
+                              child: CustomPaint(
+                                painter: _AyahMaskPainter(page, {
+                                  for (final region in page.regions)
+                                    if (widget.isVerseHidden!(
+                                      region.reference.surahNumber,
+                                      region.reference.verseNumber,
+                                    ))
+                                      region.reference,
+                                }, widget.theme.pageBackgroundColor),
+                              ),
+                            ),
+                          if (widget.isVerseHidden != null &&
+                              widget.pictureBuilder == null)
+                            FutureBuilder<PictureInfo?>(
+                              future: _markers,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  return IgnorePointer(
+                                    child: CustomPaint(
+                                      painter: _WarshArtworkPainter(
+                                        snapshot.requireData!,
+                                        widget.theme.verseTextColor ==
+                                                const Color(0xff000000)
+                                            ? null
+                                            : ColorFilter.mode(
+                                              widget.theme.verseTextColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                        clip: _hiddenRegions(page).shift(
+                                          Offset(
+                                            -page.viewBox.left,
+                                            -page.viewBox.top,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return Center(
+                                  child:
+                                      snapshot.connectionState ==
+                                              ConnectionState.done
+                                          ? TextButton(
+                                            onPressed:
+                                                () => setState(_loadMarkers),
+                                            child: Text(
+                                              'تعذر تحميل أرقام الآيات، إعادة المحاولة',
+                                              style: TextStyle(
+                                                color:
+                                                    widget.theme.verseTextColor,
+                                              ),
+                                            ),
+                                          )
+                                          : widget.loadingBuilder?.call(
+                                                context,
+                                              ) ??
+                                              const CircularProgressIndicator(),
+                                );
+                              },
+                            ),
                         ],
                       ),
                     ),
@@ -288,6 +403,19 @@ class _WarshPageState extends State<WarshPage> {
       );
     },
   );
+
+  Path _hiddenRegions(WarshPageData page) {
+    final clip = Path();
+    for (final region in page.regions) {
+      if (widget.isVerseHidden!(
+        region.reference.surahNumber,
+        region.reference.verseNumber,
+      )) {
+        clip.addPath(region.path, Offset.zero);
+      }
+    }
+    return clip;
+  }
 }
 
 class _LoadedWarshPage {
@@ -296,10 +424,43 @@ class _LoadedWarshPage {
   const _LoadedWarshPage(this.page, this.picture);
 }
 
+// Extract before entering flutter_svg's compilation cache, so a missing marker
+// layer or failed request can be retried. The resulting string has its own
+// existing cache entry, separate from the original page picture.
+class _WarshMarkerAssetLoader extends SvgAssetLoader {
+  const _WarshMarkerAssetLoader(super.assetName)
+    : super(packageName: 'fastaqim_quran');
+
+  @override
+  Future<ByteData> loadBytes(BuildContext? context) async {
+    final svgTheme = getTheme(context);
+    final source = provideSvg(await prepareMessage(context));
+    return SvgStringLoader(
+      warshMarkerSvg(source),
+      theme: svgTheme,
+    ).loadBytes(null);
+  }
+}
+
+class _WarshMarkerNetworkLoader extends SvgNetworkLoader {
+  const _WarshMarkerNetworkLoader(super.url);
+
+  @override
+  Future<ByteData> loadBytes(BuildContext? context) async {
+    final svgTheme = getTheme(context);
+    final source = provideSvg(await prepareMessage(context));
+    return SvgStringLoader(
+      warshMarkerSvg(source),
+      theme: svgTheme,
+    ).loadBytes(null);
+  }
+}
+
 class _WarshArtworkPainter extends CustomPainter {
   final PictureInfo picture;
   final ColorFilter? colorFilter;
-  const _WarshArtworkPainter(this.picture, this.colorFilter);
+  final Path? clip;
+  const _WarshArtworkPainter(this.picture, this.colorFilter, {this.clip});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -308,6 +469,7 @@ class _WarshArtworkPainter extends CustomPainter {
       size.width / picture.size.width,
       size.height / picture.size.height,
     );
+    if (clip != null) canvas.clipPath(clip!);
     if (colorFilter != null) {
       canvas.saveLayer(
         Offset.zero & picture.size,
@@ -321,7 +483,9 @@ class _WarshArtworkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_WarshArtworkPainter oldDelegate) =>
-      oldDelegate.picture != picture || oldDelegate.colorFilter != colorFilter;
+      oldDelegate.picture != picture ||
+      oldDelegate.colorFilter != colorFilter ||
+      oldDelegate.clip != clip;
 }
 
 class _AyahHighlightPainter extends CustomPainter {
@@ -351,4 +515,35 @@ class _AyahHighlightPainter extends CustomPainter {
   @override
   bool shouldRepaint(_AyahHighlightPainter oldDelegate) =>
       oldDelegate.page != page || oldDelegate.colorForAyah != colorForAyah;
+}
+
+class _AyahMaskPainter extends CustomPainter {
+  final WarshPageData page;
+  final Set<QuranAyahReference> hiddenAyahs;
+  final Color backgroundColor;
+
+  const _AyahMaskPainter(this.page, this.hiddenAyahs, this.backgroundColor);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.scale(
+      size.width / page.viewBox.width,
+      size.height / page.viewBox.height,
+    );
+    canvas.translate(-page.viewBox.left, -page.viewBox.top);
+    final mask = Paint()..color = backgroundColor.withValues(alpha: 1);
+    for (final region in page.regions) {
+      if (!hiddenAyahs.contains(region.reference)) continue;
+      canvas.drawPath(region.path, mask);
+    }
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_AyahMaskPainter oldDelegate) =>
+      oldDelegate.page != page ||
+      oldDelegate.hiddenAyahs.length != hiddenAyahs.length ||
+      !oldDelegate.hiddenAyahs.every(hiddenAyahs.contains) ||
+      oldDelegate.backgroundColor != backgroundColor;
 }

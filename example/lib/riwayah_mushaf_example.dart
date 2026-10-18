@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
+import 'package:fastaqim_quran/fastaqim_quran.dart';
 
 /// Demonstrates the existing Hafs package's two mushafs and online audio URLs.
 /// An audio player can consume the returned URLs; this example fetches no MP3s.
@@ -366,7 +366,7 @@ class _AyahActionsSheetState extends State<_AyahActionsSheet> {
                         isWarsh
                             ? widget.warshMushaf!.fontFamily
                             : HafsText.fontFamily,
-                    package: 'mushaf_riwayat',
+                    package: 'fastaqim_quran',
                   ),
                 ),
                 const Divider(height: 28),

@@ -1,8 +1,11 @@
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'qcf_theme_data.dart';
-import 'data/mushaf_riwayat.dart';
+import 'data/fastaqim_quran.dart';
 import 'header_widget.dart';
 import 'riwayah.dart';
 import 'warsh/warsh_mushaf.dart';
@@ -37,6 +40,10 @@ class QcfPage extends StatefulWidget {
   /// Used for responsive vertical spacing.
   final double h;
 
+  /// Gently use spare portrait height without scaling Hafs glyphs or changing
+  /// their line breaks. Short pages and overflowing content retain their layout.
+  final bool fitPageHeight;
+
   /// Callback when a verse is long-pressed.
   final void Function(int surahNumber, int verseNumber)? onLongPress;
 
@@ -62,6 +69,9 @@ class QcfPage extends StatefulWidget {
   /// This takes precedence over [QcfThemeData.verseBackgroundColor] if provided.
   final Color? Function(int surahNumber, int verseNumber)? verseBackgroundColor;
 
+  /// Hide only the ayah text, retaining its layout, marker and gestures.
+  final bool Function(int surahNumber, int verseNumber)? isVerseHidden;
+
   /// The current page the user is viewing (1-based). Used for windowed caching.
   /// Pages outside `currentPage ± windowSize` are released from memory.
   final int currentPage;
@@ -84,12 +94,14 @@ class QcfPage extends StatefulWidget {
     this.fontSize,
     this.sp = 1.0,
     this.h = 1.0,
+    this.fitPageHeight = false,
     this.onLongPress,
     this.onLongPressUp,
     this.onLongPressCancel,
     this.onLongPressDown,
     this.onTap,
     this.verseBackgroundColor,
+    this.isVerseHidden,
   });
 
   @override
@@ -100,6 +112,73 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
   final _recognizers = <(int, int), GestureRecognizer>{};
   final _textKey = GlobalKey();
   final _tapRanges = <(int, int, int, int)>[];
+  Object? _heightFitInputs;
+  double? _baselineTextHeight;
+  double? _fittedLineHeight;
+
+  @override
+  void initState() {
+    super.initState();
+    PaintingBinding.instance.systemFonts.addListener(_fontsChanged);
+  }
+
+  void _fontsChanged() {
+    if (!mounted || !widget.fitPageHeight) return;
+    setState(() => _heightFitInputs = null);
+  }
+
+  void _measureHeightFit(
+    Object inputs,
+    double availableHeight,
+    double baseLineHeight,
+    double scaledFontSize,
+  ) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _heightFitInputs != inputs) return;
+      final paragraph = _textKey.currentContext?.findRenderObject();
+      if (paragraph is! RenderParagraph || !paragraph.hasSize) return;
+      final textHeight = paragraph.textSize.height;
+      _baselineTextHeight ??= textHeight;
+      final boxes = paragraph.getBoxesForSelection(
+        TextSelection(
+          baseOffset: 0,
+          extentOffset:
+              paragraph.text.toPlainText(includeSemanticsLabels: false).length,
+        ),
+        boxHeightStyle: ui.BoxHeightStyle.max,
+      );
+      final lineTops = <double>[];
+      for (final box in boxes) {
+        if (box.bottom <= box.top) continue;
+        if (!lineTops.any((top) => (top - box.top).abs() < 0.5)) {
+          lineTops.add(box.top);
+        }
+      }
+      if (lineTops.isEmpty || scaledFontSize <= 0) return;
+      final spareHeight = math.max(0.0, availableHeight - _baselineTextHeight!);
+      // Only a small increase: at most 12% or 6 logical pixels per line.
+      final extraPerLine = math.min(
+        spareHeight / lineTops.length,
+        math.min(scaledFontSize * baseLineHeight * 0.12, 6.0),
+      );
+      var fittedHeight =
+          _fittedLineHeight ?? baseLineHeight + extraPerLine / scaledFontSize;
+      final currentHeight = _fittedLineHeight ?? baseLineHeight;
+      if (textHeight > availableHeight && currentHeight > baseLineHeight) {
+        // Real inline widgets can dominate a line. Back off using the actual
+        // paragraph height instead of assuming that every line is plain text.
+        fittedHeight = math.max(
+          baseLineHeight,
+          currentHeight -
+              (textHeight - availableHeight) /
+                  (lineTops.length * scaledFontSize),
+        );
+      }
+      if ((fittedHeight - currentHeight).abs() > 0.0001) {
+        setState(() => _fittedLineHeight = fittedHeight);
+      }
+    });
+  }
 
   void _tapAt(Offset position) {
     final paragraph = _textKey.currentContext?.findRenderObject();
@@ -172,6 +251,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
+    PaintingBinding.instance.systemFonts.removeListener(_fontsChanged);
     _disposeRecognizers();
     super.dispose();
   }
@@ -215,6 +295,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
         loadingBuilder: widget.warshLoadingBuilder,
         theme: widget.theme,
         verseBackgroundColor: widget.verseBackgroundColor,
+        isVerseHidden: widget.isVerseHidden,
         onAyahTap:
             widget.onTap == null && widget.onAyahTap == null
                 ? null
@@ -298,7 +379,7 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
                   text: " ﱁ  ﱂﱃﱄ\n",
                   style: TextStyle(
                     fontFamily: "QCF_P001",
-                    package: 'mushaf_riwayat',
+                    package: 'fastaqim_quran',
                     fontSize:
                         getScreenType(context) == ScreenType.large
                             ? widget.theme.basmalaFontSizeLarge * widget.sp
@@ -319,22 +400,30 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
         final verseBgColor =
             widget.theme.verseBackgroundColor?.call(surah, v) ??
             widget.verseBackgroundColor?.call(surah, v);
+        final hidden = widget.isVerseHidden?.call(surah, v) ?? false;
 
         // Verse Number Logic
         InlineSpan verseNumberSpan;
         if (widget.theme.verseNumberBuilder != null) {
-          verseNumberSpan = widget.theme.verseNumberBuilder!(
+          final customMarker = widget.theme.verseNumberBuilder!(
             surah,
             v,
             getVerseNumberQCF(surah, v),
           );
+          verseNumberSpan =
+              hidden
+                  ? TextSpan(
+                    style: TextStyle(color: widget.theme.verseNumberColor),
+                    children: [customMarker],
+                  )
+                  : customMarker;
         } else {
           verseNumberSpan = TextSpan(
             text: getVerseNumberQCF(surah, v),
             recognizer: recognizer,
             style: TextStyle(
               fontFamily: pageFont,
-              package: 'mushaf_riwayat',
+              package: 'fastaqim_quran',
               color: widget.theme.verseNumberColor,
               height: widget.theme.verseNumberHeight * widget.h,
               backgroundColor:
@@ -350,9 +439,13 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
                   ? "${verseText.substring(0, 1)}\u200A${verseText.substring(1)}"
                   : verseText,
           recognizer: recognizer,
+          semanticsLabel: hidden ? '' : null,
           style:
-              verseBgColor != null
-                  ? TextStyle(backgroundColor: verseBgColor)
+              hidden || verseBgColor != null
+                  ? TextStyle(
+                    color: hidden ? Colors.transparent : null,
+                    backgroundColor: verseBgColor,
+                  )
                   : null,
           children: [verseNumberSpan],
         );
@@ -373,52 +466,109 @@ class _QcfPageState extends State<QcfPage> with AutomaticKeepAliveClientMixin {
       offset = end;
     }
 
-    return SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
-      child: SizedBox(
-        width: screenSize.width,
-        child: GestureDetector(
-          onTapUp:
-              _hasLongPress(widget) &&
-                      (widget.onTap != null || widget.onAyahTap != null)
-                  ? (details) => _tapAt(details.localPosition)
-                  : null,
-          child: Text.rich(
-            key: _textKey,
-            TextSpan(children: verseSpans),
-            locale: const Locale("ar"),
-            textAlign: TextAlign.center,
-            textDirection: TextDirection.rtl,
-            style: TextStyle(
-              fontFamily: pageFont,
-              package: 'mushaf_riwayat',
-              fontSize:
-                  widget.fontSize ??
-                  widget.theme.fontSize ??
-                  (isPortrait
-                      ? baseFontSize
-                      : (widget.pageNumber == 1 || widget.pageNumber == 2)
-                      ? 20 * widget.sp
-                      : baseFontSize - (17 * widget.sp)),
-              color: widget.theme.verseTextColor,
-              height:
-                  isPortrait
-                      ? (widget.pageNumber == 1 || widget.pageNumber == 2)
-                          ? 2.2 * widget.h
-                          : widget.theme.verseHeight * widget.h
-                      : (widget.pageNumber == 1 || widget.pageNumber == 2)
-                      ? 4 *
-                          widget
-                              .h // simplified based on user's manual edit evaluation
-                      : 4 *
-                          widget
-                              .h, // simplified based on user's manual edit evaluation
-              letterSpacing: widget.theme.letterSpacing,
-              wordSpacing: widget.theme.wordSpacing,
+    final fontSize =
+        widget.fontSize ??
+        widget.theme.fontSize ??
+        (isPortrait
+            ? baseFontSize
+            : (widget.pageNumber == 1 || widget.pageNumber == 2)
+            ? 20 * widget.sp
+            : baseFontSize - (17 * widget.sp));
+    final baseLineHeight =
+        isPortrait
+            ? (widget.pageNumber == 1 || widget.pageNumber == 2)
+                ? 2.2 * widget.h
+                : widget.theme.verseHeight * widget.h
+            : (widget.pageNumber == 1 || widget.pageNumber == 2)
+            ? 4 *
+                widget
+                    .h // simplified based on user's manual edit evaluation
+            : 4 * widget.h; // simplified based on user's manual edit evaluation
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final fitHeight =
+            widget.fitPageHeight &&
+            isPortrait &&
+            widget.pageNumber > 2 &&
+            constraints.hasBoundedHeight;
+        if (fitHeight) {
+          final scaledFontSize = MediaQuery.textScalerOf(
+            context,
+          ).scale(fontSize);
+          final inputs = (
+            constraints.maxWidth,
+            constraints.maxHeight,
+            widget.pageNumber,
+            fontSize,
+            scaledFontSize,
+            baseLineHeight,
+            widget.theme.verseNumberHeight,
+            widget.theme.showHeader,
+            widget.theme.showBasmala,
+            widget.theme.customHeaderBuilder,
+            widget.theme.basmalaBuilder,
+            widget.theme.verseNumberBuilder,
+            widget.theme.headerFontSizeLarge,
+            widget.theme.headerFontSizeSmall,
+            widget.theme.basmalaFontSizeLarge,
+            widget.theme.basmalaFontSizeSmall,
+          );
+          if (_heightFitInputs != inputs) {
+            _heightFitInputs = inputs;
+            _baselineTextHeight = null;
+            _fittedLineHeight = null;
+          }
+          _measureHeightFit(
+            inputs,
+            constraints.maxHeight,
+            baseLineHeight,
+            scaledFontSize,
+          );
+        } else {
+          _heightFitInputs = null;
+        }
+        return SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: fitHeight ? constraints.maxHeight : 0,
+            ),
+            child: Align(
+              alignment: Alignment.center,
+              heightFactor: 1,
+              child: SizedBox(
+                width: screenSize.width,
+                child: GestureDetector(
+                  onTapUp:
+                      _hasLongPress(widget) &&
+                              (widget.onTap != null || widget.onAyahTap != null)
+                          ? (details) => _tapAt(details.localPosition)
+                          : null,
+                  child: Text.rich(
+                    key: _textKey,
+                    TextSpan(children: verseSpans),
+                    locale: const Locale("ar"),
+                    textAlign: TextAlign.center,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: pageFont,
+                      package: 'fastaqim_quran',
+                      fontSize: fontSize,
+                      color: widget.theme.verseTextColor,
+                      height:
+                          fitHeight
+                              ? _fittedLineHeight ?? baseLineHeight
+                              : baseLineHeight,
+                      letterSpacing: widget.theme.letterSpacing,
+                      wordSpacing: widget.theme.wordSpacing,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

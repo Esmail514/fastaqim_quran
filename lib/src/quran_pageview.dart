@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'qcf_theme_data.dart';
 import 'qcf_page.dart';
-import 'data/mushaf_riwayat.dart';
+import 'data/fastaqim_quran.dart';
 import 'riwayah.dart';
 import 'warsh/warsh_mushaf.dart';
 import 'warsh/warsh_page.dart';
@@ -33,6 +33,9 @@ class PageviewQuran extends StatefulWidget {
   //h (adding 1.h to get the ratio of screen size for responsive font design)
   final double h;
 
+  /// Opt in to bounded vertical spacing for Hafs portrait pages.
+  final bool fitPageHeight;
+
   /// Optional callback when page changes. Provides 1-based page number.
   final ValueChanged<int>? onPageChanged;
 
@@ -56,6 +59,10 @@ class PageviewQuran extends StatefulWidget {
   /// Returns a Color for the verse, or null for no background color.
   /// Useful for highlighting selected verses.
   final Color? Function(int surahNumber, int verseNumber)? verseBackgroundColor;
+
+  /// Hide an ayah's text without changing its layout or tap targets.
+  /// Hafs keeps its end marker; Warsh outlines the original ayah region.
+  final bool Function(int surahNumber, int verseNumber)? isVerseHidden;
 
   /// Long-press callbacks that include the pressed verse info.
   final void Function(int surahNumber, int verseNumber)? onLongPress;
@@ -92,10 +99,12 @@ class PageviewQuran extends StatefulWidget {
     this.fontSize,
     this.sp = 1,
     this.h = 1,
+    this.fitPageHeight = false,
     this.theme,
     this.textColor = const Color(0xFF000000),
     this.pageBackgroundColor = const Color(0xFFFFFFFF),
     this.verseBackgroundColor,
+    this.isVerseHidden,
     this.onLongPress,
     this.onLongPressUp,
     this.onLongPressCancel,
@@ -186,6 +195,7 @@ class _PageviewQuranState extends State<PageviewQuran> {
                 windowSize: widget.windowSize,
                 fontSize: widget.fontSize,
                 verseBackgroundColor: widget.verseBackgroundColor,
+                isVerseHidden: widget.isVerseHidden,
                 onLongPress: widget.onLongPress,
                 onLongPressUp: widget.onLongPressUp,
                 onLongPressCancel: widget.onLongPressCancel,
@@ -193,6 +203,7 @@ class _PageviewQuranState extends State<PageviewQuran> {
                 onTap: widget.onTap,
                 sp: widget.sp,
                 h: widget.h,
+                fitPageHeight: widget.fitPageHeight,
                 theme: effectiveTheme,
               ),
             );

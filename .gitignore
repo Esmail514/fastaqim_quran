@@ -6,6 +6,7 @@
 **/build/
 **/coverage/
 doc/generated/
+docs/generated/
 **/pubspec.lock
 
 # IDE and local platform configuration

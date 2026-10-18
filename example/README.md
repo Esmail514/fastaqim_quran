@@ -1,6 +1,6 @@
-# Mushaf Riwayat demo
+# Fastaqim Quran demo
 
-A Flutter application using the local `mushaf_riwayat` package. It demonstrates
+A Flutter application using the local `fastaqim_quran` package. It demonstrates
 Hafs pages, verse ranges, and a Hafs/Warsh reader with narration selection,
 page navigation, ayah actions, highlights and audio URL catalogs.
 
@@ -37,7 +37,6 @@ flutter test
 flutter analyze --no-preamble --no-fatal-infos
 ```
 
-The example has existing informational lints, documented in
-[VALIDATION.md](../doc/VALIDATION.md). See [the package README](../README.md)
+See [validation history](../doc/VALIDATION.md), [the package README](../README.md)
 and [audio integration](../doc/AUDIO.md) before copying demo code into a
-production application.
+production application. Run the checks above for the current source revision.

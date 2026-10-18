@@ -33,3 +33,46 @@ class QuranAyahReference {
   @override
   String toString() => key;
 }
+
+/// A word position in a verified dataset for the selected narration.
+///
+/// [wordPosition] is 1-based. It is not a QCF character index or a word
+/// position inferred by splitting an ayah's display text on spaces.
+class QuranWordReference {
+  final QuranRiwayah riwayah;
+  final int surahNumber;
+  final int verseNumber;
+  final int wordPosition;
+
+  const QuranWordReference({
+    required this.riwayah,
+    required this.surahNumber,
+    required this.verseNumber,
+    required this.wordPosition,
+  }) : assert(surahNumber >= 1 && surahNumber <= 114),
+       assert(verseNumber >= 1),
+       assert(wordPosition >= 1);
+
+  QuranAyahReference get ayahReference => QuranAyahReference(
+    riwayah: riwayah,
+    surahNumber: surahNumber,
+    verseNumber: verseNumber,
+  );
+
+  String get key => '${riwayah.name}:$surahNumber:$verseNumber:$wordPosition';
+
+  @override
+  bool operator ==(Object other) =>
+      other is QuranWordReference &&
+      riwayah == other.riwayah &&
+      surahNumber == other.surahNumber &&
+      verseNumber == other.verseNumber &&
+      wordPosition == other.wordPosition;
+
+  @override
+  int get hashCode =>
+      Object.hash(riwayah, surahNumber, verseNumber, wordPosition);
+
+  @override
+  String toString() => key;
+}

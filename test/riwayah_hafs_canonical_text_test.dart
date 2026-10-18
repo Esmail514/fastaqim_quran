@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mushaf_riwayat/mushaf_riwayat.dart';
-import 'package:mushaf_riwayat/src/data/quran_text.dart' as legacy;
+import 'package:fastaqim_quran/fastaqim_quran.dart';
+import 'package:fastaqim_quran/src/data/quran_text.dart' as legacy;
 
 List<Map<String, dynamic>> _source() =>
     (jsonDecode(

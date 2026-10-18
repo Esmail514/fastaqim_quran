@@ -39,7 +39,7 @@ def write(relative: str, data: bytes) -> str:
 
 
 def main() -> None:
-    cached_archive = Path(tempfile.gettempdir()) / f"mushaf_riwayat_{ARCHIVE_NAME}"
+    cached_archive = Path(tempfile.gettempdir()) / f"fastaqim_quran_{ARCHIVE_NAME}"
     if cached_archive.exists() and digest(cached_archive.read_bytes()) == ARCHIVE_SHA256:
         archive = cached_archive.read_bytes()
     else:

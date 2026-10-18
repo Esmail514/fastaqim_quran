@@ -6,7 +6,7 @@ The package folder is `custom_packages/fastaqim_quran`; its local Git history
 was preserved during the rename. See [migration](MIGRATION.md) for consumers.
 `pubspec.yaml` points to the edition's
 [GitHub repository](https://github.com/Esmail514/fastaqim_quran). Release
-`0.1.0` is being prepared under this new name, with the reported
+`0.1.0` is published under this new name, with the reported
 [upstream permission](../doc/UPSTREAM_PERMISSION.md) preserved. The README retains the
 original project's attribution. See [Publishing](../doc/PUBLISHING.md).
 

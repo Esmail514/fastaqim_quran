@@ -6,7 +6,8 @@
 **/build/
 **/coverage/
 doc/generated/
-docs/generated/
+# Legacy duplicate guides stay in Git; canonical published guides use doc/.
+/docs/
 **/pubspec.lock
 .idea/
 *.iml
